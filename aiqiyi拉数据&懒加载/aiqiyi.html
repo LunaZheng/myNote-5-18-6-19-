@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>aiqiyi</title>
+</head>
+<body>
+<style>
+  * {margin: 0; padding: 0; box-sizing: border-box; color: inherit; font: inherit; 
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  ul, li {list-style: none;}
+  a {text-decoration: none;}
+  .fl {float: left;}
+  .fr {float: right;}
+  .wrap {width: 1200px; margin: 0 auto;}
+  .clear:after {content: ''; display: inline-block; clear: both;}
+  #box {}
+  #box img {width: 180px;}
+</style>
+
+<div id="box">
+  
+</div>
+
+<!-- <script src="./js/jquery.js"></script> -->
+<script  src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
+<script>
+var imgLi = ''
+$.getJSON('https://node.video.qq.com/x/api/followSeries?callback=?', function(data) {
+// $.getJSON('https://www.ele.me/restapi/shopping/restaurants?extras%5B%5D=activities&geohash=wtw3661gzsk&latitude=31.16888&limit=24&longitude=121.39067&offset=120&terminal=web', function(data) {
+  console.log(data)
+  var data = data['data']
+  imgLi = data.map(function(video, idx) {
+    var imgUrl = video['jsonData']['new_pic_vt']
+    return '<img src="' + imgUrl + '"/>'
+  }).join("")
+  
+  console.log(imgLi)
+  $("#box").append(imgLi)
+})
+
+</script>
+
+</body>
+</html>
