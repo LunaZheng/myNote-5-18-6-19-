@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>登录</title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://codding.cn/all/static/img/favicon.ico">
+  <link rel="stylesheet" href="static/boot/css/bootstrap.css">
+  <link rel="stylesheet" href="static/css/all.css">
+</head>
+<body>
+  
+<style>
+  html, body {height: 100%;}
+  body {background: url(static/img/bg.jpg) no-repeat center / cover;}
+</style>
+<div class="mask" disable-hide style="display: block;">
+  <div class="box">
+    <div class="gray-title">
+      <span class="text">登录</span>
+    </div>
+    <form class="space" id="formLogin">
+      <table class="align">
+        <tr>
+          <td>用户名：</td>
+          <td>
+            <input type="text" id="username" class="form-control" required value="摘星">
+          </td>
+        </tr>
+        <tr>
+          <td>密　码：</td>
+          <td>
+            <input type="password" id="password" class="form-control" required value="123123">
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <input type="submit" value="登录" class="btn btn-success">
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div><div class="vm"></div>
+</div>
+
+<script src="static/js/jq.js"></script>
+<script src="static/js/g.js"></script>
+<script src="static/crypto-js/crypto-js.js"></script>
+<script src="static/crypto-js/hmac-sha256.js"></script>
+<script>
+$.get('php/user.php', {
+  a: '登录检测'
+}, function(data) {
+  if (data.code){
+    return
+  }
+  localStorage.user = JSON.stringify(data)
+  window.top.location.href = 'db-admin/'
+}, 'json')
+
+$('#formLogin').on('submit', function(e) {
+  e.preventDefault()
+  var data = {
+    a: 'login',
+    username: $('#username').val(),
+    password: CryptoJS.SHA256($('#password').val()).toString(),
+  }
+  $.get('php/user.php', data, function(data) {
+    g.err(data, function(data) {
+      // 缓存当前登录用户信息
+      localStorage.user = JSON.stringify(data)
+      location = localStorage.urlFrom || 'db-admin/index.html'
+    })
+  })
+})
+</script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=500, user-scalable=no">
+  <title>破碎效果</title>
+</head>
+<body>
+  
+<style>
+  * {padding: 0; margin: 0; list-style: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {background: #000; overflow: hidden;}
+
+  @keyframes rotate {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+  }
+
+  #box {width: 300px; height: 300px; position: absolute; left: 50%; top: 50%; margin: -150px;}
+  #box ul {height: 100%; color: #fff;
+    transform: rotate(0deg);
+    animation: rotate 10s linear infinite;
+  }
+  #box ul li {width: 10px; height: 10px; float: left; background: url(./static/img/xingzuo.png);
+    transition: 1s all;
+  }
+</style>
+<div id="box">
+  <ul></ul>
+</div>
+
+<script>
+function rand(m, n) {
+  return Math.floor(Math.random() * (n - m + 1) + m)
+}
+
+var box = document.getElementById('box')
+var ul = box.children[0]
+var lis = ul.children
+
+var col = 30
+var row = 30
+
+ul.innerHTML = new Array(row).fill().map(function(_, y) {
+  return new Array(col).fill().map(function(_, x) {
+    return '<li style="background-position: '+(-x*10)+'px '+(-y*10)+'px"></li>'
+  }).join('')
+}).join('')
+
+box.onmousemove = fnMove
+function fnMove(e) {
+  e.preventDefault()
+  var li = e.target || e.touches[0].target
+  if (li.tagName.toLowerCase() !== 'li') {
+    return
+  }
+  li.style.transform = 'translateX('+rand(-200, 200)+'px) translateY('+rand(-200, 200)+'px) rotate('+rand(0, 360)+'deg)'
+  setTimeout(function() {
+    li.style.transform = ''
+  }, 1000)
+}
+
+var isAni = false
+box.onclick = function() {
+  if (isAni) {
+    return
+  }
+  ;[].slice.call(lis).forEach(function(li, idx) {
+    li.style.transform = 'translateX('+rand(-200, 200)+'px) translateY('+rand(-200, 200)+'px) rotate('+rand(0, 360)+'deg)'
+  })
+  setTimeout(function() {
+    ;[].slice.call(lis).forEach(function(li, idx) {
+      li.style.transform = ''
+    })
+    setTimeout(function() {
+      isAni = false
+    }, 1100)
+  }, 1000)
+}
+
+</script>
+
+</body>
+</html>

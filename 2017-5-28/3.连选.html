@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<style>
+  li.on {background: orange;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+</style>
+<ul>
+  <li>
+    <input type="checkbox">
+    <span>1</span>
+  </li>
+  <li>
+    <input type="checkbox">
+    <span>2</span>
+  </li>
+  <li>
+    <input type="checkbox">
+    <span>3</span>
+  </li>
+  <li>
+    <input type="checkbox">
+    <span>4</span>
+  </li>
+  <li>
+    <input type="checkbox">
+    <span>5</span>
+  </li>
+  <li>
+    <input type="checkbox">
+    <span>6</span>
+  </li>
+  <li>
+    <input type="checkbox">
+    <span>7</span>
+  </li>
+  <li>
+    <input type="checkbox">
+    <span>8</span>
+  </li>
+  <li>
+    <input type="checkbox">
+    <span>9</span>
+  </li>
+  <li>
+    <input type="checkbox">
+    <span>10</span>
+  </li>
+</ul>
+
+<script src="jq.js"></script>
+<script>
+var oldIndex = 0
+
+$('ul').on('click', 'li', function(e) {
+  if (e.shiftKey) { // 连选
+    var curIndex = $(this).index()
+    var start = Math.min(oldIndex, curIndex)
+    var end = Math.max(oldIndex, curIndex)
+
+    $('ul li').each(function(idx) {
+      if (idx >= start && idx <= end) {
+        $(this).addClass('on').find('input').attr('checked', true)
+      } else {
+        $(this).removeClass('on').find('input').attr('checked', false)
+      }
+    })
+  } else { // 单选
+    $(this).toggleClass('on').each(function() {
+      var isOn = $(this).hasClass('on')
+      $(this).find('input').attr('checked', isOn)
+    })
+    oldIndex = $(this).index()
+  }
+})
+</script>
+
+</body>
+</html>

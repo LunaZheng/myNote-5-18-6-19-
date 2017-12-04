@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<div id="box">
+  <ul>
+    <li draggable="true" l="">1</li>
+    <li draggable="true" l="">2</li>
+    <li draggable="true" l="">3</li>
+    <li draggable="true" l="">4</li>
+    <li draggable="true" l="">5</li>
+  </ul>
+</div>
+
+<script src="jq.js"></script>
+<script>
+  $('#box ul li[draggable=true][l]').css({
+    'background-color': 'yellow'
+  })
+</script>
+
+</body>
+</html>

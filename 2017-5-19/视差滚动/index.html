@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>视差滚动 | By 摘星</title>
+  <link rel="stylesheet" href="static/css/all.css">
+</head>
+<body>
+  
+<style>
+  #nav {width: 100%; height: 50px; line-height: 50px; position: fixed; left: 0; top: 0; box-shadow: 0 0 10px rgba(0,0,0,.4); background: rgba(0,0,0,.1); z-index: 30; color: #fff; text-align: center;}
+  #nav .wrap {z-index: 2;}
+  #nav .logo-img {height: 50px; vertical-align: top;}
+  #nav a {padding: 0 20px; float: left; opacity: .7;}
+  #nav a.on {background: rgba(91,192,222, 1); opacity: 1; color: #fff;}
+  #nav.on {color: #333;}
+  #nav:before {width: 100%; height: 100%; position: absolute; left: 0; bottom: 100%; background: #fff; content: ""; opacity: 0;
+    transition: .3s all;
+  }
+  #nav.on:before {bottom: 0; opacity: 1;}
+  #nav:after {width: 100%; height: 2px; background: linear-gradient(90deg,hsla(0,60%,50%,1),hsla(10,60%,50%,1),hsla(20,60%,50%,1),hsla(30,60%,50%,1),hsla(40,60%,50%,1),hsla(50,60%,50%,1),hsla(60,60%,50%,1),hsla(70,60%,50%,1),hsla(80,60%,50%,1),hsla(90,60%,50%,1),hsla(100,60%,50%,1),hsla(110,60%,50%,1),hsla(120,60%,50%,1),hsla(130,60%,50%,1),hsla(140,60%,50%,1),hsla(150,60%,50%,1),hsla(160,60%,50%,1),hsla(170,60%,50%,1),hsla(180,60%,50%,1),hsla(190,60%,50%,1),hsla(200,60%,50%,1),hsla(210,60%,50%,1),hsla(220,60%,50%,1),hsla(230,60%,50%,1),hsla(240,60%,50%,1),hsla(250,60%,50%,1),hsla(260,60%,50%,1),hsla(270,60%,50%,1),hsla(280,60%,50%,1),hsla(290,60%,50%,1),hsla(300,60%,50%,1),hsla(310,60%,50%,1),hsla(320,60%,50%,1),hsla(330,60%,50%,1),hsla(340,60%,50%,1),hsla(350,60%,50%,1),hsla(360,60%,50%,1)); content: ""; position: absolute; left: 0; top: -2px;}
+  #nav.on:after {top: 0;}
+</style>
+<nav id="nav" -class="on">
+  <div class="wrap">
+    <div class="fl">
+      <img src="static/img/logo.png" alt="" class="logo-img">
+    </div>
+    <div class="fr">
+      <a href="javascript:">登录</a>
+      <a href="javascript:">注册</a>
+    </div>
+    <div class="links">
+      <a href="javascript:">首页</a>
+      <a href="javascript:" class="on">关于</a>
+      <a href="javascript:">服务</a>
+      <a href="javascript:">博客</a>
+      <a href="javascript:">联系</a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  #focus-view {padding-top: 55%; width: 100%; position: fixed; left: 0; top: 0; color: #fff; text-align: center;}
+  #focus-view > div {width: 100%; height: 100%; position: absolute; left: 0; top: 0;}
+  #focus-view .bg-img-box {width: 100%; height: 100%; position: relative;}
+  #focus-view .bg-img-box li {width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: no-repeat center; background-size: 100% auto;}
+  #focus-view .forward-box {}
+  #focus-view .forward-box .word-text {display: inline-block; vertical-align: middle;}
+  #focus-view .forward-box .word-text .big-text {font-size: 60px; margin-bottom: 20px;}
+  #focus-view .forward-box .word-text .small-text {line-height: 1.8em;}
+</style>
+<div id="focus-view">
+  <div class="box-back">
+    <ul class="bg-img-box">
+      <li style="background-image: url(static/img/focus-view-1.jpg);"></li>
+      <li style="background-image: url(static/img/focus-view-2.jpg);"></li>
+      <li style="background-image: url(static/img/focus-view-3.jpg);"></li>
+      <li style="background-image: url(static/img/focus-view-4.jpg);"></li>
+    </ul>
+  </div>
+  <div class="forward-box">
+    <div class="word-text">
+      <div class="big-text">SAVE TIME, SAVE MONEY,  <br> GROW & SUCCEED</div>
+      <div class="small-text">OPPORTUNITIES WITH INCREDIBLE MONEY MAKING POTENTIAL. OFFERING  <br>IDEAS THAT RAISE YOUR BUSINESS ABOVE THE EXPECTED.</div>
+    </div><div class="vm"></div>
+  </div>
+</div>
+
+<div style="padding-top: 100px; position: relative; z-index: 20;">
+  <div class="c" style="padding-top: 20px; padding-bottom: 35%;">
+    <img src="static/img/logo-ying.png" alt="">
+  </div>
+  <div class="wrap" style="margin-bottom: 200px;">
+    <style>
+      #up-section {color: #fff;}
+      #up-section > section {padding: 0 20px;}
+      #up-section h3 {font-size: 30px; white-space: nowrap; margin: 10px 0;}
+      #up-section p {font-size: 12px;}
+      #up-section section .ib {width: 70px; height: 70px; background: no-repeat;}
+    </style>
+    <div class="div-3 c" id="up-section">
+      <section class="_1">
+        <div class="c">
+          <div class="ib" style="background-image: url(static/img/up-1.png);"></div>
+        </div>
+        <h3>loan solutions</h3>
+        <p>Praesent vestibulum aenean nonummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio.</p>
+      </section>
+      <section class="_2">
+        <div class="c">
+          <div class="ib" style="background-image: url(static/img/up-2.png);"></div>
+        </div>
+        <h3>staffing service</h3>
+        <p>Praesent vestibulum aenean nonummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio.</p>
+      </section>
+      <section class="_3">
+        <div class="c">
+          <div class="ib" style="background-image: url(static/img/up-3.png);"></div>
+        </div>
+        <h3>risk assessment</h3>
+        <p>Praesent vestibulum aenean nonummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio.</p>
+      </section>
+    </div>
+
+    <style>
+      #enter-email {font-size: 16px;}
+      #enter-email .please {color: #fff; margin: 50px 0 20px 0;}
+      #enter-email .input-box {width: 360px; background: rgb(218,136,69); margin: 0 auto; border-radius: 40px;}
+      #enter-email .input-box input {border: none; background: none; color: #fff; outline: none; height: 40px; width: 100%; text-align: center;}
+      #enter-email input::-webkit-input-placeholder {color:#fff;}
+      #enter-email input:-moz-placeholder {color:#fff;}
+      #enter-email input::-moz-placeholder {color:#fff;}
+      #enter-email input:-ms-input-placeholder {color:#fff;}
+    </style>
+    <div id="enter-email" class="c" style="margin-bottom: 100px;">
+      <div class="please">留下您的邮箱，我们会不定期发送最新资讯</div>
+      <div class="input-box">
+        <input type="text" placeholder="请输入您的邮箱地址">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  .banner-info {border-radius: 10px; overflow: hidden; position: relative;}
+  .banner-info > div {width: 100%; height: 100%; position: absolute; left: 0; top: 0; padding: 3em 0 0 3em;}
+  .banner-info .up-text {font-size: 30px; margin-bottom: 1em; color: rgb(62,59,61);}
+  .banner-info .down-text {font-size: 50px; color: rgb(69,117,127);}
+</style>
+<div style="background: #fff; position: relative; z-index: 2; padding-top: .1px;">
+  <div class="wrap" style="margin-top: -120px;">
+    <div class="banner-info" style="padding-top: 25.64%; background: no-repeat url(static/img/banner-fly.jpg) center; background-size: cover;">
+      <div>
+        <div class="up-text">为企业提供咨询和建议</div>
+        <div class="down-text">您的业务立即启动</div>
+      </div>
+    </div>
+    <div style="margin: 50px 0;" class="c">
+      <div style="font-size: 20px; color: rgb(218,136,70); margin-bottom: 20px;">我们可以为您提供什么？</div>
+      <p style="color: #b5c1a7;">Praesent vestibulum aenean nonummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus mus. <br>
+        Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio gravida at cursus nec luctus a lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros.</p>
+    </div>
+    <div style="font-size: 30px; color: #45757f;" class="c">
+      CAREER EMPLOYEE HANDBOOKS HELP CENTER JOB DESCRIPTIONS LAW COMPLIANCE PAYROLL ADMINISTRATION TAX PAYMENT TIME & ATTENDANCE TRAINING & DEVELOPMENT
+    </div>
+
+    <style>
+      #serv-box {color: rgb(218,136,71);}
+      #serv-box > section {padding: 0 15px;}
+      #serv-box > section .icon-bg {width: 170px; height: 170px; height: 185px; background: no-repeat; display: inline-block;}
+      #serv-box .icon-bg {}
+      #serv-box .big-text {font-size: 30px; margin: .6em 0;}
+      #serv-box .small-text {}
+      #serv-box .line {margin: 15px auto; width: 50px; height: 1px; background: rgb(218,136,71);}
+      #serv-box .read-more {}
+    </style>
+    <div class="div-3 c" style="margin: 50px 0;" id="serv-box">
+      <section class="_1">
+        <div class="icon-bg" style="background-image: url(static/img/serv_icon-1.png);"></div>
+        <div class="big-text">education & training programs</div>
+        <div class="small-text">Praesent vestibulum aenean nonummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio.</div>
+        <div class="line"></div>
+        <div class="read-more">read-more</div>
+      </section>
+      <section class="_2">
+        <div class="icon-bg" style="background-image: url(static/img/serv_icon-2.png);"></div>
+        <div class="big-text">business strategies solutions</div>
+        <div class="small-text">Praesent vestibulum aenean nonummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio.</div>
+        <div class="line"></div>
+        <div class="read-more">read-more</div>
+      </section>
+      <section class="_3">
+        <div class="icon-bg" style="background-image: url(static/img/serv_icon-3.png);"></div>
+        <div class="big-text">lawyer solutions & support</div>
+        <div class="small-text">Praesent vestibulum aenean nonummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio.</div>
+        <div class="line"></div>
+        <div class="read-more">read-more</div>
+      </section>
+    </div>
+  </div>
+  <div class="c" style="background: rgb(189,212,202); padding-top: .1px; color: rgb(62,59,61);">
+    <div style="margin: 30px 0; font-size: 20px; color: #fff;">what`s new?</div>
+    <div style="font-size: 40px;">COMPENSATION <br>& EMPLOYEE BENEFITS:</div>
+    <div style="color: #fff; font-size: 30px; padding: 40px 0;">WE TEACH YOUR TEAM HOW TO INCREASE YOUR <br>REVENUES AND DECREASE EXPENSES</div>
+    <div style="padding-bottom: 50px;">
+      <div style="display: inline-block; height: 40px; line-height: 40px; border-radius: 40px; padding: 0 50px; background: rgb(218,136,69); color: #fff;">BOOK THIS SERVICE</div>
+    </div>
+  </div>
+  <div style="height: 400px;">
+    <iframe style="width: 100%; height: 100%;" src="http://j.map.baidu.com/xTR97" frameborder="0"></iframe>
+  </div>
+</div>
+
+<style>
+  footer {background: rgb(125,168,176); text-align: center; padding: 50px 0;}
+</style>
+<footer id="footer">
+  <img src="static/img/logo-ying.png">
+</footer>
+
+
+<script src="static/js/jq.js"></script>
+<script>
+var nav = $('#nav')
+var textOpacity = $('#focus-view .forward-box .word-text')
+
+var focusView = $('#focus-view')
+
+$(window).on('scroll', function(e) {
+  // var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+  var scrollTop = $(window).scrollTop()
+  if (scrollTop > 0) { // 加on
+    nav.addClass('on')
+  } else { // 不加on
+    nav.removeClass('on')
+  }
+
+  var opacity = 1- (scrollTop > 350 ? 350 : scrollTop) / 350
+  textOpacity.css({
+    opacity: opacity,
+    filter: 'opacity: ' + opacity * 100
+  })
+
+  // 背景视差滚动
+  focusView.css({
+    marginTop: -scrollTop / 4
+  })
+
+})
+</script>
+
+
+
+</body>
+</html>

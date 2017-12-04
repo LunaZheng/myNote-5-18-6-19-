@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  * {padding: 0; margin: 0;}
+</style>
+<div style="padding: 50px; margin: 50px; background: #ccc; position: relative;">
+  <div id="box" style="width: 200px; height: 200px; background: orange;"></div>
+</div>
+
+<script src="jq.js"></script>
+<script>
+/*
+  offset       // 相对于滚动区 / 文档 0 0 点
+  position     // 距离当前元素最近的带定位的元素的距离
+  scrollTop    // 
+  scrollLeft   //
+*/
+console.log('offset', $('#box').offset())
+console.log('position', $('#box').position())
+console.log('scrollTop', $(window).scrollTop())
+</script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<style>
+  * {padding: 0; margin: 0; list-style: none; color: inherit; box-sizing: border-box;}
+  body {background: #000; font-size: 14px; color: #fff; overflow: hidden;}
+
+  @keyframes round-ball {
+    0% {transform: rotate(0deg) translateX(250px);}
+    100% {transform: rotate(360deg) translateX(250px);}
+  }
+
+  #universe {width: 500px; height: 500px; position: absolute; left: 50%; top: 50%; margin: -250px;
+    transform-style: preserve-3d;
+    perspective: 600px
+  }
+  #universe * {
+    transform-style: preserve-3d;
+  }
+  #universe .d3 {height: 100%;}
+  #universe .sun {width: 50px; height: 50px; margin: -25px; position: absolute; left: 50%; top: 50%; background: -red; border-radius: 50%;}
+  #universe .round-sun,
+  #universe .round-sun li {width: 100%; height: 100%; position: absolute; left: 0; top: 0; border: 1px solid rgba(255,255,255,.2); border-radius: 50%;}
+  #universe .round-sun li .ball {width: 50px; height: 50px; margin: -25px; background: orange; border-radius: 50%; position: absolute; left: 50%; top: 50%;
+    display: none;
+    animation: round-ball 10s linear infinite;
+  }
+</style>
+
+<div id="universe">
+  <div class="d3">
+    <div class="sun"></div>
+    <ul class="round-sun"></ul>
+  </div>
+</div>
+
+<script>
+var universe = document.getElementById('universe')
+var d3 = universe.getElementsByClassName('d3')[0]
+var sun = universe.getElementsByClassName('sun')[0]
+var roundSun = universe.getElementsByClassName('round-sun')[0]
+
+var len = 300
+var deg = 720 / len
+
+roundSun.innerHTML = new Array(len).fill().map(function(_, idx) {
+  // return '<li style="transform: rotateX('+(idx * deg)+'deg) rotateY(' + (idx * deg) + 'deg)"><div class="ball"></div></li>'
+  // var scale = (idx + len) / (len * 2)
+  var scale = (idx + 1) / len
+  return '<li style="transform: rotateY(' + (idx * deg) + 'deg) rotate('+(deg * idx)+'deg) scale('+scale+')"><div class="ball"></div></li>'
+}).join('')
+
+var li = roundSun.children
+
+var x = 0
+var y = 0
+document.onmousedown = function(e) {
+  e.preventDefault()
+  var x1 = e.clientX
+  var y1 = e.clientY
+  var originX = x
+  var originY = y
+  document.onmousemove = function(e) {
+    var x2 = e.clientX
+    var y2 = e.clientY
+    x = x2 - x1 + originX
+    y = y2 - y1 + originY
+    d3.style.transform = 'rotateY(' + x / 4 + 'deg) rotateX(' + -y / 4 + 'deg)'
+  }
+  document.onmouseup = function(e) {
+    this.onmousemove = this.onmouseup = null
+  }
+}
+</script>
+<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=273259755&site=qq&menu=yes" style="position: fixed; left: 20px; bottom: 20px; z-index: 999999; color: #09f; font-size: 12px; text-align: center; text-decoration: none;">Powered By <br> 摘星fy</a>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+#box {width: 100px; height: 100px; background: red; margin: 100px auto;}
+</style>
+
+<div id="box"></div>
+<script>
+var box = document.getElementById('box')
+box.style.MozTransform = 'rotate(45deg)'
+// box.style.mozTransform = 'rotate(45deg)'
+// box.style.msTransform = 'rotate(45deg)'
+</script>
+
+</body>
+</html>

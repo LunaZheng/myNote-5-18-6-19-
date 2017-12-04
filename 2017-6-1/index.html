@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Document</title>
+  <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+  
+<div id="focus">
+  <div class="back">
+    <ul class="img-list">
+      <li class="on" style="background-image: url(static/img/slide-1.jpg);"></li>
+      <li style="background-image: url(static/img/slide-2.jpg);"></li>
+      <li style="background-image: url(static/img/slide-3.jpg);"></li>
+    </ul>
+  </div>
+  <div class="forward">
+    <div class="top-border">
+      <div class="wrap">
+        <div class="fr">
+          <ul class="nav">
+            <li class="on"><a href="javascript:">Home</a></li>
+            <li><a href="javascript:">About</a></li>
+            <li><a href="javascript:">Services</a></li>
+            <li><a href="javascript:">News</a></li>
+            <li><a href="javascript:">Gallery</a></li>
+            <li><a href="javascript:">Contacts</a></li>
+          </ul>
+          <div class="search-box">
+            <img src="static/img/searchButton.png" alt="">
+          </div>
+        </div>
+        <div class="logo-box">
+          <img src="static/img/logo.png" alt="">
+        </div>
+        <div class="inc-select">
+          <select class="select-menu" id="menu-module-93">
+            <option value="#">Navigate to...</option>
+            <option value="" selected="selected">Home</option>
+            <option value="">About</option>
+            <option value="">–History</option>
+            <option value="">–Team</option>
+            <option value="">––Testimonials</option>
+            <option value="">–FAQs</option>
+            <option value="">–Template settings</option>
+            <option value="">–Forum</option>
+            <option value="">Services</option>
+            <option value="">News</option>
+            <option value="">Gallery</option>
+            <option value="">Contacts</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="abs">
+      <div class="wrap">
+        <div class="ib">
+          <ul class="text-list">
+            <li>
+              <h3>FAST, FREQUENT & DIRECT FLIGHTS</h3>
+              <div class="line"></div>
+              <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation urper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie conseq</p>
+            </li>
+            <li>
+              <h3>FAST, FREQUENT & DIRECT FLIGHTS</h3>
+              <div class="line"></div>
+              <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation urper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie conseq</p>
+            </li>
+            <li>
+              <h3>FAST, FREQUENT & DIRECT FLIGHTS</h3>
+              <div class="line"></div>
+              <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation urper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie conseq</p>
+            </li>
+          </ul>
+          <div class="btn-box">
+            <ul>
+              <li class="on"></li>
+              <li></li>
+              <li></li>
+            </ul>
+          </div>
+        </div><div class="vm"></div>
+      </div>
+    </div>
+    <div id="btn-page-next" class="btn-page-next ib"></div>
+  </div>
+</div>
+
+<script>
+var focus = document.getElementById('focus')
+var btnBox = focus.querySelector('.btn-box')
+var btns = [].slice.call(btnBox.children[0].children)
+var imgList = focus.querySelector('.img-list')
+var lis = [].slice.call(imgList.children)
+console.log(btns)
+btns.forEach(function(btn, idx) {
+  btn.onclick = function(e) {
+    lis.forEach(function(el, idx) {
+      btns[idx].classList.remove('on')
+      el.classList.remove('on')
+    })
+    btns[idx].classList.add('on')
+    lis[idx].classList.add('on')
+  }
+})
+
+var timer = 0
+var btnPageNext = document.getElementById('btn-page-next')
+btnPageNext.onclick = function(e) {
+  var targetY = parseInt(focus.offsetHeight)
+  timer = setInterval(function() {
+    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+    var speed = (targetY - scrollTop) / 15
+    speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed)
+    scrollTop += speed
+    document.body.scrollTop = document.documentElement.scrollTop = scrollTop
+    if (speed === 0) {
+      clearInterval(timer)
+      console.log('stop')
+    }
+  }, 1000 / 60)
+}
+</script>
+
+
+<div id="welcome" style="padding: 100px 0;">
+  <div class="wrap c">
+    <h1 style="font-size: 50px; font-weight: bold;">WELCOME TO OUR WEBSITE</h1>
+    <div class="line" style="width: 20%; height: 1px; background: #ccc; margin: 40px auto;"></div>
+    <p>Wsi enim ad minim veniam, quis nostrud exerci tation urper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie conseqvel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui f</p>
+  </div>
+</div>
+
+<div style="height: 240px; background: url(static/img/bar.jpg) no-repeat center / cover;"></div>
+
+<style>
+  #services {}
+  #services .servs {}
+  #services .servs * {vertical-align: middle;}
+  #services .servs ul {}
+  #services .servs ul li {}
+  #services .servs ul li h2 {font-size: 30px;}
+  #services .servs ul li p {margin: 30px 0; padding-right: 20px;}
+</style>
+<div id="services" style="background: rgb(250,250,250); padding: 40px 0;">
+  <div class="wrap">
+    <h1 style="font-size: 50px;">services</h1>
+    <p style="margin: 50px 0;">Wsi enim ad minim veniam, quis nostrud exerci tation urper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie conseqvel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignis</p>
+    <div class="servs">
+      <ul class="div-2">
+        <li>
+          <h2>
+            <img src="static/img/icon1.png" alt="">
+            <span>Food & Drinks</span>
+          </h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident quidem, accusantium animi voluptatibus laboriosam eum dignissimos quae earum, sapiente tempora totam nobis deserunt rerum. Consectetur, facere. Exercitationem, provident, dolore!</p>
+        </li>
+        <li>
+          <h2>
+            <img src="static/img/icon1.png" alt="">
+            <span>Food & Drinks</span>
+          </h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident quidem, accusantium animi voluptatibus laboriosam eum dignissimos quae earum, sapiente tempora totam nobis deserunt rerum. Consectetur, facere. Exercitationem, provident, dolore!</p>
+        </li>
+        <li>
+          <h2>
+            <img src="static/img/icon1.png" alt="">
+            <span>Food & Drinks</span>
+          </h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident quidem, accusantium animi voluptatibus laboriosam eum dignissimos quae earum, sapiente tempora totam nobis deserunt rerum. Consectetur, facere. Exercitationem, provident, dolore!</p>
+        </li>
+        <li>
+          <h2>
+            <img src="static/img/icon1.png" alt="">
+            <span>Food & Drinks</span>
+          </h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident quidem, accusantium animi voluptatibus laboriosam eum dignissimos quae earum, sapiente tempora totam nobis deserunt rerum. Consectetur, facere. Exercitationem, provident, dolore!</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  #news {padding: 40px 0;}
+  #news h1 {margin-bottom: 50px;}
+  #news h1 > span {font-size: 50px; padding-bottom: 50px; border-bottom: 1px solid #ccc; display: inline-block;}
+  #news .div-3 {}
+  #news .div-3 > * {padding: 15px;}
+  #news .div-3 h4 {font-size: 20px; margin-bottom: 20px;}
+  #news .div-3 .img-box {padding-top: 60%; background: no-repeat center / cover;}
+  #news .div-3 > * {padding: 10px;}
+  #news .div-3 .in {border: 1px solid #ddd;}
+  #news .div-3 .in .down {padding: 1em; text-align: left;}
+  #news .div-3 .in .down .arrow-img {width: 34px; height: 16px; background: url(static/img/readmore.png) no-repeat 0 0; cursor: pointer; margin-top: 20px;
+    transition: .3s all;
+  }
+  #news .div-3 .in .down .arrow-img:hover {background-position: 0 -16px;}
+</style>
+<div id="news">
+  <div class="wrap c">
+    <h1>
+      <span>NEWS</span>
+    </h1>
+    <p style="margin-bottom: 30px;">Wsi enim ad minim veniam, quis nostrud exerci tation urper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie conseqvel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignis</p>
+    <div>
+      <ul class="div-3">
+        <li>
+          <div class="in">
+            <div class="img-box" style="background-image: url(static/img/img1.jpg);"></div>
+            <div class="down">
+              <h4>Demonstrav erunt leer</h4>
+              <p>Lorem ipsum dolad minim veniam, quis nostrud exerci tation urper suscipit lobortis nisl ut aliquip ex ea co</p>
+              <div class="arrow-img"></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="in">
+            <div class="img-box" style="background-image: url(static/img/img1.jpg);"></div>
+            <div class="down">
+              <h4>Demonstrav erunt leer</h4>
+              <p>Lorem ipsum dolad minim veniam, quis nostrud exerci tation urper suscipit lobortis nisl ut aliquip ex ea co</p>
+              <div class="arrow-img"></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="in">
+            <div class="img-box" style="background-image: url(static/img/img1.jpg);"></div>
+            <div class="down">
+              <h4>Demonstrav erunt leer</h4>
+              <p>Lorem ipsum dolad minim veniam, quis nostrud exerci tation urper suscipit lobortis nisl ut aliquip ex ea co</p>
+              <div class="arrow-img"></div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  #buss {background: rgb(160,228,194); color: #fff; padding: 20px 0; white-space: nowrap;}
+  #buss * {vertical-align: middle;}
+  #buss li {padding: 20px 0;}
+</style>
+<div id="buss">
+  <div class="wrap">
+    <ul class="div-3">
+      <li>
+        <a href="javascript:">
+          <img src="static/img/zoom.png" alt="">
+          <span>9870 St Vincent Place, DC 45</span>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:">
+          <img src="static/img/zoom.png" alt="">
+          <span>+1 800 603 6035</span>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:">
+          <img src="static/img/zoom.png" alt="">
+          <span>mail@demolink.org</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<style>
+  #footer {background: #000; color: #fff; padding: 50px 0;}
+  #footer ul {text-align: center;}
+  #footer ul li {display: inline-block; margin: 0 10px;}
+  #footer ul li a {}
+  #footer .copyright {text-align: center; margin-top: 50px;}
+</style>
+
+<footer id="footer">
+  <div class="wrap">
+    <ul>
+      <li>
+        <a href="javascript:">Home</a>
+      </li>
+      <li>
+        <a href="javascript:">About</a>
+      </li>
+      <li>
+        <a href="javascript:">Services</a>
+      </li>
+      <li>
+        <a href="javascript:">News</a>
+      </li>
+      <li>
+        <a href="javascript:">Gallery</a>
+      </li>
+      <li>
+        <a href="javascript:">Contacts</a>
+      </li>
+    </ul>
+    <div class="copyright">
+      <span>Airport © 2017 Privacy Policy</span>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>

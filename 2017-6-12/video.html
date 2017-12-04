@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="static/boot/css/bootstrap.css">
+</head>
+<body>
+
+<!-- 
+播放/暂停
+当前时间/总时长
+缓冲进度
+播放进度
+静音
+声音条
+全屏/退出全屏
+ -->
+
+<style>
+  .fl {float: left;}
+  .fr {float: right;}
+  .ib {display: inline-block; vertical-align: middle;}
+
+  .mask {width: 100%; height: 100%; position: fixed; left: 0; top: 0; z-index: 1000; background: rgba(0,0,0,.5);
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+  }
+  #my-video {position: relative;}
+  #my-video video {max-width: 100%;}
+  #my-video .control {width: 100%; background: rgba(255,0,0,.3); position: absolute; left: 0; top: 0; color: #fff; padding: 10px; white-space: nowrap;}
+  #my-video .control > .fl {margin-right: 15px;}
+  #my-video .control > .fr {margin-left: 15px; white-space: nowrap;}
+  #my-video .control > .mid {overflow: hidden; padding: 0 10px;}
+  #my-video .control .tiao {width: 100%; height: 10px; background: #ccc; position: relative; top: -2px; position: relative; cursor: pointer;}
+  #my-video .control .tiao > div {width: 100%; height: 100%; position: absolute; left: 0; top: 0;}
+  #my-video .control .tiao .load-progress {width: 50%; background: wheat;}
+  #my-video .control .tiao .bofangjindu {background: #0ff;}
+  #my-video .control .tiao .volume-progress {background: #0ff;}
+  #my-video .control .tiao .circle {width: 10px; height: 10px; position: absolute; right: -5px; top: -4px; background: #09f; border-radius: 50%; cursor: pointer;}
+</style>
+<div class="mask">
+  <div id="my-video">
+    <video @click="isPlaying = !isPlaying" id="video" src="static/video/oceans.mp4"></video>
+    <!-- <video id="video" src="https://images.apple.com/media/cn/macbook-pro/2016/b4a9efaa_6fe5_4075_a9d0_8e4592d6146c/films/design/macbook-pro-design-tft-cn-20161026_1536x640h.mp4"></video> -->
+    <div class="control">
+      <div class="fl">
+        <i
+          :class="['glyphicon', 'glyphicon-' + (isPlaying ? 'pause' : 'play')]"
+          @click="palyOrPause"
+        ></i>
+        <span>{{curTime | timeFormat}} / {{duration | timeFormat}}</span>
+      </div>
+      <div class="fr">
+        <i 
+          :class="['glyphicon', 'glyphicon-volume-' + (volume === 0 ? 'off' : 'up'), 'mute']"
+          @click="volume = volume ? 0 : 1"
+        ></i>
+        <div class="tiao ib" style="width: 100px;">
+          <div class="volume volume-progress"
+            @mousedown="setVolumeByMousedown"
+            :style="{width: volume * 100 + '%'}"
+          >
+            <div class="circle"></div>
+          </div>
+        </div>
+        <i class="glyphicon glyphicon-fullscreen"
+          @click="isFullScreen=!isFullScreen"
+        ></i>
+      </div>
+      <div class="mid">
+        <div class="tiao ib"
+          @mousedown="setCurPlayTimeByMousedown"
+        >
+          <!-- 缓冲进度 -->
+          <div class="load-progress"
+            :style="{width: buffered / duration * 100 + '%'}"
+          ></div>
+          <!-- 播放进度 -->
+          <div class="bofangjindu"
+            :style="{width: curTime / duration * 100 + '%'}"
+          >
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="static/js/jq.js"></script>
+<script src="static/js/vue.js"></script>
+<script>
+;(function() {
+  var video
+  function fillLen(n, len) {
+    n = n.toString()
+    len = len || 2
+    while (n.length < len) {
+      n = '0' + n
+    }
+    return n
+  }
+  var vm = new Vue({
+    el: '#my-video',
+    data() {
+      return {
+        buffered: 50,
+        isPlaying: false,
+        curTime: 0,
+        duration: 0,
+        progressScale: 0,
+        volume: 1,
+        oldVolume: 1,
+        isFullScreen: false
+      }
+    },
+    watch: {
+      isFullScreen: function(newVal) {
+        if (newVal) { // 进入全屏
+          $('#my-video')[0].webkitRequestFullscreen()
+        } else { // 退出全屏
+          document.webkitExitFullscreen()
+        }
+      },
+      volume: function(newVal) {
+        video.volume = newVal
+      },
+      isPlaying: function(newVal) {
+        !newVal ? video.pause() : video.play()
+      }
+    },
+    filters: {
+      timeFormat(time) {
+        // 00:00:00
+        var hour = Math.floor(time / 60 / 60)
+        var minute = Math.floor((time - hour * 60 * 60) / 60)
+        var second = Math.floor(time - hour * 60 * 60 - minute * 60)
+        if (hour === 0) {
+          return fillLen(minute) + ':' + fillLen(second)
+        } else {
+          return fillLen(hour) + ':' + fillLen(minute) + ':' + fillLen(second)
+        }
+      }
+    },
+    methods: {
+      palyOrPause: function() { // 播放或暂停
+        var vm = this
+        vm.isPlaying = !vm.isPlaying
+      },
+      setVolumeByMousedown: function(e) {
+        e.preventDefault()
+        var tiao = $(e.target).closest('.tiao')[0]
+        var pos = tiao.getBoundingClientRect()
+        document.onmousemove = function(e) {
+          var scale = (e.clientX - pos.left) / tiao.offsetWidth
+          if (scale < 0) {
+            scale = 0
+          }
+          if (scale > 1) {
+            scale = 1
+          }
+          vm.volume = scale
+        }
+        document.onmouseup = function(e) {
+          this.onmousemove = this.onmouseup = null
+        }
+      },
+      setCurPlayTimeByMousedown: function(e) { // 鼠标拖拽控制播放
+        e.preventDefault()
+        var pos = $(e.target).closest('.tiao')[0].getBoundingClientRect()
+        document.onmousemove = function(e) {
+          var x2 = e.clientX
+          video.currentTime = vm.curTime = (x2 - pos.left) / pos.width * vm.duration
+        }
+        document.onmouseup = function(e) {
+          this.onmousemove = this.onmouseup = null
+          vm.isPlaying = true
+          var x2 = e.clientX
+          video.currentTime = vm.curTime = (x2 - pos.left) / pos.width * vm.duration
+        }
+      }
+    },
+    mounted: function() {
+      var vm = this
+      video = document.getElementById('video')
+      video.oncanplay = function() { // 视频可以播放的时候
+        vm.duration = video.duration
+      }
+      video.ontimeupdate = function() { // 播放进度
+        vm.curTime = video.currentTime
+      }
+      video.onprogress = function() { // 缓冲进度
+        try {
+          vm.buffered = video.buffered.end(0)
+        } catch (e) {
+          console.log('资源获取异常')
+        }
+      }
+    }
+  })
+})();
+
+</script>
+
+</body>
+</html>

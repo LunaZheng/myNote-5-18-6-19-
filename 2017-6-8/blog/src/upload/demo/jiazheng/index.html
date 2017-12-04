@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=640, user-scalable=no">
+	<title>家政服务</title>
+	<link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
+	<link rel="stylesheet" href="static/boot/css/bootstrap.min.css">
+	<link rel="stylesheet" href="static/css/reset.css">
+</head>
+<body>
+
+<div id="app" style="display: none;">
+	<nav id="nav">
+		<div class="lay-c">
+			<div class="logo-box fl">
+				<a href="/uncle"><img src="static/img/logo.png" alt="12356" class="logo-img"></a>
+			</div>
+			<div class="icons fr">
+				<section>
+					<a href="tel:4008001150"><i class="glyphicon glyphicon-earphone"></i></a>
+				</section><!-- 
+			 --><section>
+					<i class="glyphicon glyphicon-user"></i>
+				</section><!-- 
+			 --><section>
+					<i class="glyphicon glyphicon-list" @click="$event.stopPropagation(); (dataPage.isInChoose = !dataPage.isInChoose)"></i>
+					<ul class="list" id="choose-page" v-show="dataPage.isInChoose">
+						<li 
+							v-for="(item, idx) in dataPage.list" @click="setPage(idx)" 
+							:class="{on: dataPage.cur == idx}"
+						>
+							<i class="glyphicon" :class="[item.icon]"></i>
+							<span>{{item.name}}</span>
+						</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+	</nav>
+
+	<div style="height: 88px;"></div>
+	<div class="lay-c" id="content">
+		<section id="index"
+			v-show="dataPage.cur == 0"
+		>
+			<img src="static/img/index-1.png" alt="">
+			<a href="javascript:" class="btn-goto-order"></a>
+		</section>
+		<section id="serv"
+			v-show="dataPage.cur == 1"
+		>
+			<div class="wrap-serv">
+				<div class="ctrl space">
+					<div class="fl choose">
+						<div class="show-state" 
+							@click="$event.stopPropagation(); (dataServ.isDisplay = !dataServ.isDisplay)"
+						>{{dataServ.children[routerServ[0]].name}}</div>
+						<ul class="choose-list" v-show="dataServ.isDisplay">
+							<li 
+								v-for="(item, idx) in dataServ.children"
+								:class="{on: idx == routerServ[0]}"
+								@click="routerServ[0] = idx; routerServ[1] = routerServ[2] = 0; (dataServ.isDisplay = !dataServ.isDisplay);"
+							>{{item.name}}</li>
+						</ul>
+					</div>
+					<div class="show-choosed-list">
+						<ul>
+							<li
+								v-for="(item, idx) in dataServ.children[routerServ[0]].children"
+								:class="{on: routerServ[1] == idx}"
+								@click="routerServ[1] = idx; routerServ[2] = '0'"
+							>{{item.name}}</li>
+						</ul>
+					</div>
+				</div>
+				<div class="space serv-con">
+					<ul class="do-list">
+						<li 
+							v-for="(item, idx) in dataServ.children[routerServ[0]].children[routerServ[1]].children"
+							:class="{on: idx == routerServ[2]}"
+							@click="routerServ[2] = idx"
+						>
+							<a>
+								<div class="serv-icon" :style="{backgroundImage: 'url('+item.icon+')'}"></div>
+								<span class="serv-name" :title="item.name">{{item.name}}</span>
+							</a>
+						</li>
+					</ul>
+					<div class="white-bg space">
+						<div class="desc">
+							<h1 class="page-header">
+								<span>{{dataServ.curDataServ.name}}</span>
+								<a href="javascript:" class="button button-green fr">我要预约</a>
+							</h1>
+							<p>杭州日常保洁，专注保洁服务:单位/商场等保洁外包，开荒保洁，外墙清洗，地面清洗，玻璃清洁，家庭保洁。服务周到，经验丰富，品质一流，价格实惠!</p>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo amet ex placeat beatae perspiciatis voluptates, voluptatum, porro vitae dolorum dignissimos veritatis quas eaque iusto eum iste unde voluptas nulla nesciunt.</p>
+							<p>杭州日常保洁，专注保洁服务:单位/商场等保洁外包，开荒保洁，外墙清洗，地面清洗，玻璃清洁，家庭保洁。服务周到，经验丰富，品质一流，价格实惠!</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="team"
+			v-show="dataPage.cur == 2"
+		>
+			<div class="space"
+				v-show="!companyId && !helperId"
+			>
+				<div class="good-company">
+					<h1 class="page-header">优质家政公司</h1>
+					<ul class="company-list">
+						<li 
+							v-for="(item, idx) in dataTeam.company.list"
+							@click="setCompanyId(idx)"
+						>
+							<div class="in">
+								<div class="inc-company-logo" :style="{backgroundImage: 'url('+item.icon+')'}"></div>
+								<div class="company-name">{{item.name}}</div>
+								<div class="star-box" v-html="item.star"></div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="good-helper">
+					<h1 class="page-header">优质服务者</h1>
+					<ul class="helper-list">
+						<li v-for="(item, idx) in dataTeam.helper.list"
+							@click="setHelperId(idx)"
+						>
+							<div class="in">
+								<div class="face-img" :style="{backgroundImage: 'url('+item.icon+')'}"></div>
+								<div class="username">{{item.name}}</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div v-show="companyId && !helperId" class="company">
+				<div class="space">
+					<div class="white-bg">
+						<div class="company-info">
+							<div class="company-logo fl" style="background-image: url(http://ofc6sbq4f.bkt.clouddn.com/Frh9sq2gnjx78y3DBSkXqh0uAIsK?imageView2/2/w/160/h/160);"></div>
+							<div>
+								<table>
+									<tr>
+										<td>公司名称：</td>
+										<td>彩虹之家</td>
+									</tr>
+									<tr>
+										<td>公司简介：</td>
+										<td>A good day</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="helper-list">
+						<h1 class="page-header">优质服务者</h1>
+						<div v-show="companyHelperList.length == 0">
+							<span style="color: #aaa;">暂无相关服务者</span>
+						</div>
+						<ul class="unstyled">
+							<li 
+								v-for="(item, idx) in companyHelperList"
+								@click="setHelperId(idx)"
+							>
+								<div class="in">
+									<div class="face-img" style="background-image: url(&quot;static/img/ayi.jpg&quot;);"></div>
+									<div class="username">何海燕</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="space" v-show="helperId" id="user-info">
+				<div class="white-bg">
+					<div class="face-box" style="background-image: url(static/img/ayi.jpg);"></div>
+					<div>
+						<div><strong>何润之</strong></div>
+						<div>
+							<span>个人简介：</span>
+							<span>暂无</span>
+						</div>
+					</div>
+				</div>
+				<h1 class="page-header">基本信息</h1>
+				<div class="user-info white-bg">
+					<ul class="list-unstyled">
+						<li>
+							<span class="l-label">民族：</span>
+							<span>保密</span>
+						</li>
+						<li>
+							<span class="l-label">学历：</span>
+							<span>保密</span>
+						</li>
+						<li>
+							<span class="l-label">语言：</span>
+							<span>保密</span>
+						</li>
+						<li>
+							<span class="l-label">经历：</span>
+							<span>保密</span>
+						</li>
+						<li>
+							<span class="l-label">入职信息：</span>
+							<span>保密</span>
+						</li>
+						<li>
+							<span class="l-label">星座：</span>
+							<span>保密</span>
+						</li>
+						<li>
+							<span class="l-label">生肖：</span>
+							<span>保密</span>
+						</li>
+						<li>
+							<span class="l-label">工作意向：</span>
+							<span>保密</span>
+						</li>
+						<li>
+							<span class="l-label">自我评价：</span>
+							<span>保密</span>
+						</li>
+					</ul>
+					<div class="c" style="margin-top: 20px;">
+						<a href="javascript:" class="button button-green">立即预约</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="about-us"
+			v-show="dataPage.cur == 3"
+		>
+			<div class="space">
+				<div class="white-bg">
+					<div class="choose-about">
+						<ul class="tab-title div-2 c">
+							<li @click="pageQuestion.cur = '0'" :class="{on: pageQuestion.cur == '0'}">关于我们</li>
+							<li @click="pageQuestion.cur = '1'" :class="{on: pageQuestion.cur == '1'}">常见问题</li>
+						</ul>
+					</div>
+					<div>
+						<div class="tab-con">
+							<section v-show="pageQuestion.cur == '0'" style="display: block;">
+								<h2 class="page-header">公司介绍</h2>
+								<div class="con">
+									<p>浙江智咖互联网科技有限公司成立于2016年9月，注册资金1000万，公司坐落于美丽的西施故里------全国百强县前列浙江·诸暨。同期成立旗下互联网家庭服务平台“表叔云服”。</p>
+									<p>智咖科技是一家集互联网家服务>智咖科技是一家集互联网家服务、软件开发、计算机数据处理、金融产品外包、信息技术咨询等服务为一体的互联网科技公司。凭借对家政和互联网行业的深刻理解，智咖科技将线下家政服务与互联网应用相结合，为用户提供简单、方便、安全、高效的互联网服务平台，帮助用户实现低成本、低风险、快起步、高效率的信息化目标。公司拥有着亲切、开放、严谨的企业文化，科学规范的管理以及大量的优秀人才，在产品开发、推广和维护方面始终贯彻“以用户为中心”的宗旨，将“服务”贯穿于公司运作和管理的每一个细节，赢得用户的广泛信任和支持。</p>
+									<p>智咖科技以开放融和的态度不断向互联网应用领域纵深化发展。智咖成长的过程，就是服务用户的过程，是和用户一起不断成功的过程!</p>
+								</div>
+								<h2 class="page-header">平台介绍</h2>
+								<div class="con">
+									<p>表叔云服是一个以家为中心，始终秉承“生活再累也要顾家，琐事再多还有表叔”的服务理念，致力于打造一个能为三四线城市居民匹配相宜的小时工、长期工、住家保姆、月嫂、育儿嫂、家务员、居家陪护员等一站式服务平台。其对家庭生活劳务需求或优化家庭赖以运转的社区环境，对整个家庭运作和家庭发展具有直接、重要的公共影响，除家政服务外还延伸至病患陪护、养老助残、医疗保健、育婴师等专业服务项目。</p>
+									<p>浙江智咖互联网科技有限公司 互联网家服务大咖 <br> 公司地址：浙江省诸暨市艮塔西路138号新金融大厦7楼B座</p>
+									<table class="align">
+										<tr>
+											<td>公司地址：</td>
+											<td>浙江省诸暨市艮塔西路138号新金融大厦7楼B座</td>
+										</tr>
+										<tr>
+											<td>客服电话：</td>
+											<td>0575-87007782</td>
+										</tr>
+										<tr>
+											<td>网　　址：</td>
+											<td>www.uncleserv.com</td>
+										</tr>
+										<tr>
+											<td>邮　　箱：</td>
+											<td>zhejiangzhika@163.com</td>
+										</tr>
+									</table>
+								</div>
+								<div class="c" style="padding: 30px 0;">
+									<img src="static/img/erweima.png" alt="">
+								</div>
+							</section>
+							<section v-show="pageQuestion.cur == '1'">
+								<h2 class="page-header">为什么我下不了单？</h2>
+								<div class="con">
+									<p>请检查您手机的网络状态是否连接正常>请检查您手机的网络状态是否连接正常。</p>
+									<p>请您在APP中查看余额，如果余额为负数，充值后方可下单。</p>
+									<p>请查看“订单”中是否存在未支付订单，如果存在，请支付后再下其它订单。</p>
+									<p>您的附近可能暂时没有可以提供服务的阿姨/技师。</p>
+								</div>
+								<h2 class="page-header">为什么我下不了单？</h2>
+								<div class="con">
+									<p>请检查您手机的网络状态是否连接正常>请检查您手机的网络状态是否连接正常。</p>
+									<p>请您在APP中查看余额，如果余额为负数，充值后方可下单。</p>
+									<p>请查看“订单”中是否存在未支付订单，如果存在，请支付后再下其它订单。</p>
+									<p>您的附近可能暂时没有可以提供服务的阿姨/技师。</p>
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+
+<script src="static/js/jq.js"></script>
+<script src="static/js/vue.js"></script>
+<script src="static/js/jo.js?absda"></script>
+<script>
+var vm = new Vue({
+	el: '#app',
+	data: (function() {
+		// 设置页面
+		var dataPage = {
+			cur: 0,
+			isInChoose: false,
+			list: [{
+				'name': '首页',
+				'icon': 'glyphicon-list-alt'
+			}, {
+				'name': '服务介绍',
+				'icon': 'glyphicon-tasks'
+			}, {
+				'name': '服务团队',
+				'icon': 'glyphicon-flag'
+			}, {
+				'name': '关于我们',
+				'icon': 'glyphicon-info-sign'
+			}]
+		}
+		if (!(jo.router['pageOut'] > 0 && jo.router['pageOut'] < dataPage.list.length)) {
+			jo.router('pageOut', 0)
+		}
+		dataPage.cur = jo.router('pageOut')
+
+		var routerServ = {}
+		try {
+			routerServ = JSON.parse(jo.router('routerServ'))
+		} catch(e) {
+			routerServ = {
+				'0': '0',
+				'1': '0',
+				'2': '0',
+			}
+		}
+		routerServ.toString = function() {
+			return JSON.stringify(this)
+		}
+		jo.router('routerServ', routerServ.toString())
+
+		// 服务介绍
+		var dataServ = {
+			isDisplay: false,
+			curDataServ: {},
+			children: [{
+				name: '家政钟点',
+				children: [{
+					name: '居家保洁',
+					children: [{
+						name: '日常清洁',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FpCCarGuG1LQZoeEswk8_OopH7Nk',
+						html: '',
+					}, {
+						name: '擦窗清洁',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FuLAWlCNoqWJxso4ZSbcRoxTOVvC',
+						html: '',
+					}, {
+						name: '家电清洗',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FkbwiP9bgP3mrw6AqvaMmoVBgc06',
+						html: '',
+					}, {
+						name: '保洁套餐',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FqGKdKRENrF3a8MbWeiFpxOOcX0v',
+						html: '',
+					}]
+				}, {
+					name: '你帮我忙',
+					children: [{
+						name: '买菜做饭－用餐人数',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/Fp-lfH4YI27u7Tedqvit5S0O3t7P',
+						html: '',
+					}, {
+						name: '买菜做饭－按小时计算',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/Fp-lfH4YI27u7Tedqvit5S0O3t7P',
+						html: '',
+					}, {
+						name: '宴会帮工',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/Fqqw1hDDxUP3V9pKipgN0ZRnYu6Q',
+						html: '',
+					}, {
+						name: '酒席帮工',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/Fk8RExKw9fdMRTDi72CAKiUT7Vzd',
+						html: '',
+					}, {
+						name: '帮工套餐',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FqGKdKRENrF3a8MbWeiFpxOOcX0v',
+						html: '',
+					}]
+				}, {
+					name: '贴心陪护',
+					children: [{
+						name: '老人陪护',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FscWfZ412p3u8CMn8r-cjQPluOFn',
+						html: ''
+					}, {
+						name: '病人陪护',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FtNvNAKAmyYT-8SI8w9fW4oVs_T8',
+						html: ''
+					}]
+				}, {
+					name: '绿色洗护',
+					children: [{
+						name: '皮具保养',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FmTTaevYOGgd3RYck5nmbOmSc0XL',
+						html: ''
+					}, {
+						name: '家常洗衣',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/Fl0b6BNMfE82xuYJfi8ohan5wYzQ',
+						html: ''
+					}, {
+						name: '鞋类洗护',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FleBbca2v5aCnICx8etCZ0I8-csw',
+						html: ''
+					}, {
+						name: '洗护套餐',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FqGKdKRENrF3a8MbWeiFpxOOcX0v',
+						html: ''
+					}]
+				}]
+			}, {
+				name: '维修工',
+				children: [{
+					name: '家电维修',
+					children: [{
+						name: '皮具保养',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FmTTaevYOGgd3RYck5nmbOmSc0XL',
+						html: ''
+					}, {
+						name: '家常洗衣',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/Fl0b6BNMfE82xuYJfi8ohan5wYzQ',
+						html: ''
+					}, {
+						name: '鞋类洗护',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FleBbca2v5aCnICx8etCZ0I8-csw',
+						html: ''
+					}, {
+						name: '洗护套餐',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FqGKdKRENrF3a8MbWeiFpxOOcX0v',
+						html: ''
+					}]
+				}, {
+					name: '上门开锁',
+					children: [{
+						name: '皮具保养',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FmTTaevYOGgd3RYck5nmbOmSc0XL',
+						html: ''
+					}, {
+						name: '家常洗衣',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/Fl0b6BNMfE82xuYJfi8ohan5wYzQ',
+						html: ''
+					}, {
+						name: '鞋类洗护',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FleBbca2v5aCnICx8etCZ0I8-csw',
+						html: ''
+					}, {
+						name: '洗护套餐',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FqGKdKRENrF3a8MbWeiFpxOOcX0v',
+						html: ''
+					}]
+				}, {
+					name: '水电维修',
+					children: [{
+						name: '皮具保养',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FmTTaevYOGgd3RYck5nmbOmSc0XL',
+						html: ''
+					}, {
+						name: '家常洗衣',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/Fl0b6BNMfE82xuYJfi8ohan5wYzQ',
+						html: ''
+					}, {
+						name: '鞋类洗护',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FleBbca2v5aCnICx8etCZ0I8-csw',
+						html: ''
+					}, {
+						name: '洗护套餐',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FqGKdKRENrF3a8MbWeiFpxOOcX0v',
+						html: ''
+					}]
+				}, {
+					name: '管道维修',
+					children: [{
+						name: '皮具保养',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FmTTaevYOGgd3RYck5nmbOmSc0XL',
+						html: ''
+					}, {
+						name: '家常洗衣',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/Fl0b6BNMfE82xuYJfi8ohan5wYzQ',
+						html: ''
+					}, {
+						name: '鞋类洗护',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FleBbca2v5aCnICx8etCZ0I8-csw',
+						html: ''
+					}, {
+						name: '洗护套餐',
+						icon: 'http://ofc6sbq4f.bkt.clouddn.com/FqGKdKRENrF3a8MbWeiFpxOOcX0v',
+						html: ''
+					}]
+				}]
+			}]
+		}
+
+		var dataTeam = {
+			company: {
+				list: [{
+					name: '彩虹之家',
+					icon: 'static/img/jiazheng-1.jpg',
+					star: '',
+					helperList: []
+				}, {
+					name: '美好生活',
+					icon: 'static/img/jiazheng-2.jpg',
+					star: '',
+					helperList: []
+				}, {
+					name: '韵味妈妈',
+					icon: 'static/img/jiazheng-3.jpg',
+					star: '',
+					helperList: []
+				}, {
+					name: '三心家政',
+					icon: 'static/img/jiazheng-1.jpg',
+					star: '',
+					helperList: []
+				}, {
+					name: '彩虹之家',
+					icon: 'static/img/jiazheng-2.jpg',
+					star: '',
+					helperList: []
+				}, {
+					name: '美好生活',
+					icon: 'static/img/jiazheng-3.jpg',
+					star: '',
+					helperList: []
+				}, {
+					name: '韵味妈妈',
+					icon: 'static/img/jiazheng-1.jpg',
+					star: '',
+					helperList: []
+				}, {
+					name: '三心家政',
+					icon: 'static/img/jiazheng-2.jpg',
+					star: '',
+					helperList: []
+				}]
+			},
+			helper: {
+				list: [{
+					name: '何海燕',
+					icon: 'static/img/ayi.jpg'
+				}, {
+					name: '何佳慧',
+					icon: 'static/img/ayi.jpg'
+				}, {
+					name: '钱柯达',
+					icon: 'static/img/ayi.jpg'
+				}, {
+					name: '童力文',
+					icon: 'static/img/ayi.jpg'
+				}, {
+					name: '何海燕',
+					icon: 'static/img/ayi.jpg'
+				}, {
+					name: '何佳慧',
+					icon: 'static/img/ayi.jpg'
+				}, {
+					name: '钱柯达',
+					icon: 'static/img/ayi.jpg'
+				}, {
+					name: '童力文',
+					icon: 'static/img/ayi.jpg'
+				}, {
+					name: '李水根',
+					icon: 'static/img/ayi.jpg'
+				}]
+			}
+		}
+		dataTeam.company.list.forEach(function(item, idx) {
+			item.helperList = new Array(idx).fill().map(function() {
+				return {
+					username: 'ssss',
+					faceImg: 'static/img/ayi.jpg'
+				}
+			})
+		})
+
+		// 常见问题路由
+		var pageQuestion = {
+			cur: 1,
+			list: ['0', '1']
+		}
+		jo.router('pageQuestion', jo.correct(pageQuestion.list, jo.router('pageQuestion')))
+		pageQuestion.cur = jo.router('pageQuestion')
+
+		dataTeam.company.list = dataTeam.company.list.map(function(item, idx) {
+			item.star = new Array(jo.rand(1, 5)).fill().map(function() {
+				return '<img src="static/img/star.png" alt="" />'
+			}).join('')
+			return item
+		})
+
+		dataServ.curDataServ = dataServ.children[routerServ[0]].children[routerServ[1]].children[routerServ[2]]
+
+		return {
+			// 服务介绍数据
+			dataServ: dataServ,
+			// 页面 -> 路由和icon
+			dataPage: dataPage,
+			// 团队介绍
+			dataTeam: dataTeam,
+			// 服务介绍 -> 路由
+			routerServ: routerServ,
+			// 关于我们 -> 路由
+			pageQuestion: pageQuestion,
+			// 公司id
+			companyId: jo.router('companyId'),
+			// 服务者id
+			helperId: jo.router('helperId'),
+			companyHelperList: dataTeam.company.list[jo.router('companyId') || 0].helperList
+		}
+	})(),
+	methods: {
+		setPage: function(cur) {
+			this.companyId = 0
+			this.helperId = 0
+			delete jo.router['companyId']
+			delete jo.router['helperId']
+			this.dataPage.cur = cur
+			this.dataPage.isInChoose = false
+			jo.router('pageOut', cur)
+			$(window).scrollTop(0)
+		},
+		setCompanyId: function(id) {
+			id = id.toString()
+			vm.companyId = id
+			jo.router('companyId', id)
+			vm.companyHelperList = vm.dataTeam.company.list[id].helperList
+		},
+		setHelperId: function(id) {
+			id = id.toString()
+			this.helperId = id
+			jo.router('helperId', id)
+		},
+		log: function(msg) {
+			console.log(msg)
+		}
+	}
+})
+
+vm.$watch('routerServ', function() {
+	jo.router('routerServ', JSON.stringify(this.routerServ))
+	var dataServ = this.dataServ
+	var routerServ = this.routerServ
+	this.dataServ.curDataServ = dataServ.children[routerServ[0]].children[routerServ[1]].children[routerServ[2]]
+}, {
+	deep: true
+})
+
+vm.$watch('pageQuestion.cur', function() {
+	jo.router('pageQuestion', this.pageQuestion.cur)
+})
+
+$('#app').css({
+	display: ''
+})
+</script>
+
+</body>
+</html>

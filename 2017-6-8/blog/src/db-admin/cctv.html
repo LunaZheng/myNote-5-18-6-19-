@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>CoddingBlog | By 摘星fy</title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://codding.cn/all/static/img/favicon.ico">
+  <link rel="stylesheet" href="../static/boot/css/bootstrap.css">
+  <link rel="stylesheet" href="../static/css/all2.css">
+  <link rel="stylesheet" href="../static/css/admin.css">
+</head>
+<body>
+
+<div class="container" id="app">
+  <div class="space">
+    <div style="margin-bottom: 15px;">
+      <button class="btn btn-success"
+        @click="data=[];getCrossData()"
+      >获取数据</button>
+    </div>
+    <div class="alert alert-info">
+      <span>{{msg}}</span>
+    </div>
+    <div>
+      <pre>{{data}}</pre>
+    </div>
+  </div>
+</div>
+
+<script src="../static/js/jq.js"></script>
+<script src="../static/boot/js/bootstrap.js"></script>
+<script src="../static/js/g.es6.js"></script>
+<script src="../static/js/vue.js"></script>
+<script>
+var vm = new Vue({
+  el: '#app',
+  data() {
+    return {
+      count: 0,
+      msg: 'OK',
+      data: []
+    }
+  },
+  methods: {
+    getCrossData(e) {
+      var vm = this
+      vm.count++
+      vm.msg = '正在加载第' + vm.count + '页'
+      $.getJSON('http://api.cntv.cn/lanmu/columnSearch?&p=' + vm.count + '&n=1000&serviceId=tvcctv&t=jsonp&cb=?', (data) => {
+        data = data.response.docs
+        if (data.length === 0) {
+          let json = {}
+          let _data = []
+          let _data_ = []
+
+          vm.data.forEach(function(item, idx) {
+            const key = item.channel_name
+            json[key] = json[key] || []
+            json[key].push(item)
+          })
+
+          for (var key in json) {
+            _data_.push({
+              name: key,
+              list: json[key],
+            })
+          }
+
+          vm.data = _data_
+
+          $.post('php/exec.php', {
+            data: JSON.stringify(_data_),
+            phpCode: `
+              file_put_contents('cctv.json', $_POST['data']);
+              err(0, '数据保存成功');
+            `
+          }, function(data) {
+            g.err(data, function(data) {
+              vm.msg = data.msg
+            })
+          })
+
+          vm.msg = '数据加载完毕'
+          return
+        }
+        vm.data = vm.data.concat(data.map(function(item, idx) {
+          return {
+            column_name: item.column_name,
+            channel_name: item.channel_name,
+            column_logo: item.column_logo,
+            column_topicid: item.column_topicid,
+          }
+        }))
+        vm.getCrossData()
+      })
+    }
+  },
+  mounted() {
+    var vm = this
+    $.get('php/cctv.json', function(data) {
+      // console.log(data)
+      vm.data = data
+      vm.msg = 'cctv.json 加载完毕'
+    })
+  }
+})
+</script>
+
+</body>
+</html>

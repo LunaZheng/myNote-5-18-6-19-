@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<script>
+;(function() {
+  if (!navigator.geolocation) {
+    alert('您的破浏览不支持地理定位')
+    return
+  }
+
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    pos = pos.coords
+    /*
+      latitude   纬度
+      longitude  经度
+    */
+  }, function(err) {
+    console.log(err)
+  })
+
+})();
+
+</script>
+
+</body>
+</html>

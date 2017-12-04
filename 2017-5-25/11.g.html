@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  body {background: #ddd;}
+  svg {width: 500px; height: 500px; background: #fff;}
+  rect {width: 100px; height: 100px; fill: orange; x: 100; y: 100;}
+  circle {cx: 150; cy: 300; r: 50; fill: blue;}
+</style>
+
+<svg>
+  <g transform="rotate(30, 150, 220)">
+    <rect></rect>
+    <circle></circle>
+  </g>
+</svg>
+
+<script>
+  var g = document.getElementsByTagName('g')[0]
+  var count = 0
+
+  setInterval(function() {
+    count++
+    g.setAttribute('transform', 'rotate('+count+', 150, 220)')
+  }, 1000 / 60)
+</script>
+
+</body>
+</html>

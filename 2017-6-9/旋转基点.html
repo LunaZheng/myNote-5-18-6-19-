@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  * {padding: 0; margin: 0; list-style: none;}
+  #clock {width: 400px; height: 400px; border: 1px solid #000; position: absolute; left: 50%; top: 50%; margin: -200px; border-radius: 50%;}
+  #clock .kedu {height: 100%; position: relative;}
+  #clock .kedu ul {width: 100%; height: 100%; position: absolute;}
+  #clock .kedu ul.hour {}
+  #clock .kedu ul.hour li {width: 4px; height: 16px; margin: -8px -2px; background: #000; position: absolute; left: 50%; top: 50%; text-align: center; line-height: 20px; font-size: 20px; white-space: nowrap;}
+  #clock .kedu ul.hour li .num {width: 30px; height: 100%; margin-left: -13px;}
+  #clock .kedu ul.minute {}
+  #clock .kedu ul.minute li {width: 1px; height: 10px; position: absolute; left: 50%; top: 50%; background: #000; margin: -5px -1px;}
+  #clock .pointer {}
+  #clock .pointer > div {width: 2px; height: 130px; position: absolute; left: 50%; top: 50%; margin-top: -130px; margin-left: -1px; background: #000;
+    transform-origin: bottom center;
+  }
+  #clock .pointer .second {}
+  #clock .pointer .minute {width: 4px; height: 120px; margin-top: -120px; margin-left: -2px;}
+  #clock .pointer .hour {width: 6px; height: 80px; margin-top: -80px; margin-left: -3px;}
+  #clock .center {width: 20px; height: 20px; background: radial-gradient(rgba(255,100,100,1) 0%, red 100%); position: absolute; left: 50%; top: 50%; border-radius: 50%; margin: -10px;}
+</style>
+
+<div id="clock">
+  <div class="kedu">
+    <ul class="minute">
+      <script>
+        document.write(new Array(60).fill().map(function(_, idx) {
+          return '<li style="transform: rotate('+(idx * 6)+'deg) translateY(-195px)"></li>'
+        }).join(''))
+      </script>
+    </ul>
+    <ul class="hour">
+      <script>
+        document.write(new Array(12).fill().map(function(_, idx) {
+          return (
+            '<li style="transform: rotate('+(idx * 30)+'deg) translateY(-192px)">'+
+              '<div class="num" style="transform: translateY(20px) rotate('+(-idx * 30)+'deg)">'+(!idx ? 12 : idx)+'</div>'+
+            '</li>'
+          )
+        }).join(''))
+      </script>
+    </ul>
+  </div>
+  <div class="pointer">
+    <div class="second"></div>
+    <div class="minute"></div>
+    <div class="hour"></div>
+  </div>
+  <div class="center"></div>
+</div>
+
+<script>
+var clock = document.getElementById('clock')
+var pointer = clock.getElementsByClassName('pointer')[0]
+var pointerHour = pointer.getElementsByClassName('hour')[0]
+var pointerMinute = pointer.getElementsByClassName('minute')[0]
+var pointerSecond = pointer.getElementsByClassName('second')[0]
+
+function run() {
+  var oDate = new Date()
+  var hour = oDate.getHours()
+  var minute = oDate.getMinutes()
+  var second = oDate.getSeconds()
+
+  pointerHour.style.transform = 'rotate('+((hour + minute / 60 + second / 60 / 60) / 12 * 360)+'deg)'
+  pointerMinute.style.transform = 'rotate('+((minute + second / 60) / 60 * 360)+'deg)'
+  pointerSecond.style.transform = 'rotate(' + (second / 60 * 360) + 'deg)'
+}
+
+run()
+setInterval(run, 1000)
+
+</script>
+
+</body>
+</html>

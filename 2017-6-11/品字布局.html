@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  * {box-sizing: border-box;}
+  html,body {height: 100%; margin: 0;}
+  
+  .pin {height: 100%;}
+  .pin > div {height: 50%;}
+  .pin > .top {background: #eee;}
+  .pin > .bottom {background: #ddd;}
+  .pin > .bottom > div {width: 50%; height: 100%; float: left;}
+  .pin > .bottom > div:nth-child(1) {background: orange;}
+  .pin > .bottom > div:nth-child(2) {background: red;}
+</style>
+<div class="pin">
+  <div class="top"></div>
+  <div class="bottom">
+    <div class="_1"></div>
+    <div class="_2"></div>
+  </div>
+</div>
+
+</body>
+</html>

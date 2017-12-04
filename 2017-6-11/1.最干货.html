@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  .flex-container {background: #ddd;
+    display: flex;
+  }
+  .flex-container .item {padding: 10px 0; background: orange; border: 1px solid #aaa;
+    flex: 1;
+  }
+  .flex-container .item-1 {width: 100px; flex: none;}
+  .flex-container .item-3 {width: 100px; flex: none;}
+  /* 
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    display: flex;
+    flex: 1;
+  */
+
+</style>
+<div class="flex-container">
+  <section class="item item-1"><span>1</span></section>
+  <section class="item item-2"><span>2</span></section>
+  <section class="item item-3"><span>3</span></section>
+</div>
+
+</body>
+</html>

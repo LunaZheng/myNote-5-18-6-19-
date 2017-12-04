@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=640, user-scalable=no">
+  <title>Blog | By 摘星fy</title>
+  <link rel="stylesheet" href="static/css/all.css?dabc">
+  <link rel="stylesheet" href="static/icon/style.css">
+</head>
+<body>
+
+<div id="app" :class="{on: g.router.isShowProfile}">
+  <page-profile></page-profile><!-- 导航页 -->
+  <div id="blog" style="transform: translateX(0px);">
+    <transition-group name="bounce">
+      <div
+        v-for="(name, idx) in g.router.pages"
+        :key="idx"
+        :is="name"
+        :g="g"
+      ></div>
+    </transition-group>
+    <div class="click-hide-profile"
+      @click="g.router.isShowProfile = false"
+    ></div>
+  </div>
+</div>
+
+<script src="static/js/jq.js"></script>
+<script src="static/js/vue.js"></script>
+<script src="static/js/Component.Profile.es6.js"></script>
+<script src="static/js/Component.Index.es6.js"></script>
+<script src="static/js/Component.ArticleContent.es6.js"></script>
+<script src="static/js/g.js"></script>
+<script>
+const vm = new Vue({
+  el: '#app',
+  data() {
+    return {
+      g: {
+        router: {
+          pages: ['page-index']
+        },
+        isShowProfile: false,
+        goForward(componentName) {
+          const g = this
+          if (g.router.isLoading) {
+            return
+          }
+          g.router.isLoading = true
+          this.router.pages.push(componentName)
+        },
+        goBack() {
+          history.back()
+        }
+      }
+    }
+  },
+  watch: {
+    'g.router': {
+      deep: true,
+      handler(newVal) {
+        // location.hash = location.host.indexOf('localhost') > -1 ? JSON.stringify(newVal) : encodeURIComponent(JSON.stringify(newVal))
+        location.hash = JSON.stringify(newVal)
+      }
+    }
+  },
+  methods: {
+    routerInit() {
+      const vm = this
+      let hash = location.hash.substring(1)
+      let router = {}
+      try {
+        hash = decodeURI(hash)
+      } catch (e) {
+        console.log('hash decodeURI err')
+      }
+      try {
+        router = JSON.parse(hash)
+      } catch (e) {
+        console.log('hash parse err')
+      }
+      router.pages = router.pages || ['page-index']
+      router.isShowProfile = router.isShowProfile || false
+      router.isLoading = router.isLoading || false
+      vm.g.router = router
+    }
+  },
+  mounted() {
+    const vm = this
+    vm.routerInit()
+    $(window).on('hashchange', () => {
+      vm.routerInit()
+    })
+
+    /*$('#blog').on('mousedown touchstart', '.view', function(e) {
+      const view = $(this)
+      const isPC = e.type === 'mousedown'
+      const x1 = isPC ? e.clientX : e.targetTouches[0].clientX
+      const y1 = isPC ? e.clientY : e.targetTouches[0].clientY
+      const activeEl = $(isPC ? document : this)
+      const originX = 0
+      let isHorizontal
+      activeEl.on('mousemove.gesture touchmove.gesture', function(e) {
+        const x2 = isPC ? e.clientX : e.targetTouches[0].clientX
+        const y2 = isPC ? e.clientY : e.targetTouches[0].clientY
+        if (isHorizontal === undefined) {
+          isHorizontal = Math.abs(x2 - x1) > Math.abs(y2 - y1)
+        } else {
+          if (isHorizontal) {
+            // 横着
+            e.preventDefault()
+          } else {
+            // 竖着
+            return
+          }
+        }
+        let x = x2 - x1 + originX
+        if (x < 0) {
+          x = 0
+        }
+        view.css({
+          transform: 'translateX(' + x + 'px)'
+        })
+      })
+      activeEl.on('mouseup.gesture touchend.gesture', function(e) {
+        $(this).off('mousemove.gesture touchmove.gesture mouseup.gesture touchend.gesture')
+        if (!isHorizontal) {
+          return
+        }
+        const x3 = isPC ? e.clientX : e.changedTouches[0].clientX
+        const dis = x3 - x1
+        if (dis > 20) {
+          view.css({
+            transition: '.3s all',
+            transform: 'translateX(100%)'
+          })
+          setTimeout(function() {
+            view.css({
+              display: 'none'
+            })
+            history.back()
+          }, 350)
+        }
+      })
+    })*/
+  }
+})
+
+</script>
+
+</body>
+</html>

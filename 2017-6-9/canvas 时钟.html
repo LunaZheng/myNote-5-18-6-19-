@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+<style>
+  body {background: #aaa;}
+  canvas {background: #fff; position: absolute; left: 50%; top: 50%; margin: -200px;}
+</style>
+<canvas width="400" height="400" id="c"></canvas>
+<script>
+var c = document.getElementById('c')
+var gd = c.getContext('2d')
+
+function d2a(deg) {
+  return deg / 180 * Math.PI
+}
+
+setInterval(render, 1000 / 60)
+
+function render() {
+  gd.clearRect(0, 0, c.width, c.height)
+
+  gd.beginPath()
+  gd.arc(200, 200, 180, 0, 2 * Math.PI)
+  gd.stroke()
+  gd.closePath()
+
+  // 分钟
+  new Array(60).fill().forEach(function(_, idx) {
+    gd.save()
+    gd.beginPath()
+    var deg = idx * 6
+    var x = Math.cos(d2a(deg)) * (180 - 5) + 200
+    var y = Math.sin(d2a(deg)) * (180 - 5) + 200
+    gd.translate(x, y)
+    gd.rotate(d2a(deg+90))
+    gd.rect(-1, -5, 1, 10)
+    gd.fill()
+    gd.restore()
+  })
+
+  // 小时
+  new Array(12).fill().forEach(function(_, idx) {
+    gd.save()
+    gd.beginPath()
+    var deg = idx * 30
+    var x = Math.cos(d2a(deg)) * (180 - 5) + 200
+    var y = Math.sin(d2a(deg)) * (180 - 5) + 200
+    gd.translate(x, y)
+    gd.rotate(d2a(deg + 90))
+    gd.rect(-1, -5, 2, 15)
+    gd.fill()
+    gd.restore()
+
+    var _x = Math.cos(d2a(deg - 90)) * (160 - 5) + 200
+    var _y = Math.sin(d2a(deg - 90)) * (160 - 5) + 200
+    gd.textAlign = 'center'
+    gd.textBaseline = 'middle'
+    gd.fillText(idx ? idx : 12, _x, _y)
+  })
+
+  var oDate = new Date()
+  var hour = oDate.getHours()
+  var minute = oDate.getMinutes()
+  var second = oDate.getSeconds()
+
+  // 秒针
+  gd.save()
+  gd.translate(200, 200)
+  var deg = second / 60 * 360
+  gd.rotate(d2a(deg))
+  gd.fillRect(-1, -140+10, 2, 140)
+  gd.restore()
+  // 分针
+  gd.save()
+  gd.translate(200, 200)
+  var deg = (minute + second / 60) / 60 * 360
+  gd.rotate(d2a(deg))
+  gd.fillRect(-2, -110+10, 4, 110)
+  gd.restore()
+  // 时针
+  gd.save()
+  gd.translate(200, 200)
+  var deg = (hour + minute / 60) / 12 * 360
+  gd.rotate(d2a(deg))
+  gd.fillRect(-3, -80+10, 6, 80)
+  gd.restore()
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=750, user-scalable=no">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  * {padding: 0; margin: 0; list-style: none;}
+  #box {width: 200px; margin: 0 auto;}
+  #box ul {}
+  #box ul li {height: 40px; background: orange; margin-bottom: 10px; opacity: 0;
+    transition: 1s all;
+  }
+  #box ul li:nth-child(2n) {
+    transform: translateX(-200px);
+  }
+  #box ul li:nth-child(2n+1) {
+    transform: translateX(200px);
+  }
+  #box ul li.on {opacity: 1;
+    transform: translateX(0);
+  }
+</style>
+
+<div id="box">
+  <ul>
+    <script>
+      for (var i = 0; i < 100; i++) {
+        document.write('<li>'+i+'</li>')
+      }
+    </script>
+  </ul>
+</div>
+<script>
+var lis = [].slice.call(document.querySelectorAll('li'))
+window.onresize = window.onload = window.onscroll = function() {
+  lis.forEach(function(li, idx) {
+    var pos = li.getBoundingClientRect()
+    if (
+      !(
+        pos.bottom < 0 ||
+        pos.top > document.documentElement.clientHeight
+      )
+    ) {
+      // li.classList.add('on')
+      li.className = 'on'
+    }
+  })
+}
+</script>
+
+</body>
+</html>

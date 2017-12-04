@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  * {padding: 0; margin: 0;}
+</style>
+<div style="position: relative; background: wheat; padding: 100px; margin: 100px;">
+  <p>Hello</p>
+</div>
+<p>2nd Paragraph</p>
+
+<script src="jq.js"></script>
+<script>
+var p = $("p:first");
+var position = p.position();
+$("p:last").html( "left: " + position.left + ", top: " + position.top );
+</script>
+
+</body>
+</html>

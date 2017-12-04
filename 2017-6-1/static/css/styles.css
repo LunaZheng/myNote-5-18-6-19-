@@ -1,0 +1,126 @@
+* {padding: 0; margin: 0; color: inherit; font: inherit; box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {font-size: 14px; color: #333;}
+ul,li {list-style: none;}
+a {text-decoration: none;}
+p {color: #777;}
+
+.vm {display: inline-block; height: 100%; vertical-align: middle;}
+.ib {display: inline-block; vertical-align: middle; position: relative;}
+.c {text-align: center;}
+.fl {float: left;}
+.fr {float: right;}
+.abs {width: 100%; height: 100%; position: absolute; left: 0; top: 0;}
+.wrap {max-width: 1152px; margin: 0 auto; position: relative; padding: 0 20px;}
+
+.div-2:after,
+.div-3:after,
+.div-4:after,
+.div-5:after {content: ""; display: block; clear: both;}
+
+.div-2 > * {float: left; position: relative; width: 50%;}
+.div-3 > * {float: left; position: relative; width: 33.33%;}
+.div-4 > * {float: left; position: relative; width: 25%;}
+.div-5 > * {float: left; position: relative; width: 20%;}
+
+@media (max-width: 800px) {
+  .div-2 > * {width: 100%; float: none;}
+  .div-3 > * {width: 100%; float: none;}
+  .div-4 > * {width: 100%; float: none;}
+  .div-5 > * {width: 100%; float: none;}
+}
+
+#focus {padding-top: 55%; position: relative; color: #fff;}
+#focus > div {width: 100%; height: 100%; position: absolute; left: 0; top: 0;}
+#focus .back {}
+#focus .back .img-list {height: 100%; position: relative;}
+#focus .back .img-list li {width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: #ddd no-repeat center / cover; opacity: 0;
+  -webkit-transition: .3s all;
+  -o-transition: .3s all;
+  transition: .3s all;
+}
+#focus .back .img-list li.on {opacity: 1;}
+
+#focus .forward {}
+#focus .forward .top-border {border-bottom: 1px solid #7a7a7a; position: relative; z-index: 2;}
+#focus .forward .top-border .wrap {padding: 20px;}
+#focus .forward .top-border .wrap .inc-select {display: none; overflow: hidden; margin: 50px 0; color: #333;}
+#focus .forward .top-border .wrap .inc-select .select-menu {width: 100%;}
+#focus .forward .top-border .wrap * {vertical-align: middle;}
+#focus .forward .top-border .wrap:after {content: ""; display: block; clear: both;}
+#focus .forward .top-border .wrap > .fr {}
+#focus .forward .top-border .wrap > .fr ul {display: inline-block;}
+#focus .forward .top-border .wrap > .fr ul li {display: inline-block; margin-left: 50px;}
+#focus .forward .top-border .wrap > .fr ul li.on {color: rgb(4,156,208);}
+#focus .forward .top-border .wrap > .fr ul li a {}
+#focus .forward .top-border .wrap > .fr .search-box {display: inline-block; margin-left: 50px; padding-left: 50px; border-left: 1px solid #7a7a7a;}
+#focus .forward .top-border .wrap > .logo-box {}
+#focus .forward .top-border .wrap > .logo-box img {}
+
+#focus .forward .abs  {text-align: center;}
+#focus .forward .abs .wrap {height: 100%;}
+#focus .forward .abs .wrap .ib {width: 100%;}
+#focus .forward .abs .wrap .ib .text-list {height: 240px;}
+#focus .forward .abs .wrap .ib .text-list li {width: 100%; position: absolute; left: 0; top: 0;}
+#focus .forward .abs .wrap .ib .text-list li h3 {font-size: 44px; width: 70%; margin: 0 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+#focus .forward .abs .wrap .ib .text-list li .line {height: 1px; width: 20%; background: #fff; margin: 50px auto;}
+#focus .forward .abs .wrap .ib .text-list li p {width: 70%; margin: 0 auto;}
+
+#focus .forward .abs .wrap .ib .btn-box {margin-bottom: 100px;}
+#focus .forward .abs .wrap .ib .btn-box ul {text-align: center;}
+#focus .forward .abs .wrap .ib .btn-box ul li {width: 20px; height: 20px; border: 1px solid #fff; display: inline-block; margin: 0 4px; position: relative; cursor: pointer;}
+#focus .forward .abs .wrap .ib .btn-box ul li:after {content: ""; width: 4px; height: 4px; background: #fff; position: absolute; left: 50%; top: 50%; margin: -2px; opacity: 0;
+  -webkit-transition: .5s all;
+  -o-transition: .5s all;
+  transition: .5s all;
+}
+#focus .forward .abs .wrap .ib .btn-box ul li:hover:after,
+#focus .forward .abs .wrap .ib .btn-box ul li.on:after {opacity: 1;}
+#focus .forward .btn-page-next {width: 60px; height: 60px; background: url(../img/camera_more.png) no-repeat; cursor: pointer; position: absolute; left: 50%; margin-left: -30px; bottom: 50px;
+  -webkit-transition: .3s all;
+  -o-transition: .3s all;
+  transition: .3s all;
+}
+#focus .forward .btn-page-next:hover {background-position: 0 -60px;}
+
+@media (min-width: 1200px) {
+  
+}
+
+@media (max-width: 1200px) {
+  #focus .forward .top-border .wrap > .fr ul li {margin-left: 20px;}
+  #focus .forward .abs .wrap .ib .text-list {height: 200px;}
+  #focus .forward .abs .wrap .ib .text-list li .line {margin: 20px auto;}
+}
+
+@media (max-width: 1000px) {
+  #focus .forward .abs .wrap .ib {top: 50px; position: relative;}
+  #focus .forward .abs .wrap .ib .text-list li h3 {white-space: normal; font-size: 30px;}
+}
+
+@media (max-width: 850px) {
+  #focus .forward .top-border,
+  #focus .forward .top-border .wrap {border: none; position: static;}
+  #focus .forward .top-border .wrap > .fr ul {display: none;}
+  #focus .forward .top-border .wrap .inc-select {display: block;}
+  #focus .forward .top-border .wrap .inc-select .select-menu {width: 100%;}
+  #focus .forward .abs .wrap .ib {top: 100px;}
+  #focus .forward .abs .wrap .ib .text-list {display: none;}
+  #focus .forward .abs .wrap .ib .text-list li .line {display: none;} 
+  #focus .forward .abs .wrap .ib .text-list li p {display: none;} 
+  #focus .forward .btn-page-next {display: none;}
+  #focus .forward .top-border .wrap > .fr .search-box {padding: 0; margin: 0; position: absolute; left: 50%; bottom: 20px; border: none;}
+}
+ 
+@media (max-width: 600px) {
+  #focus .forward .abs {white-space: nowrap; display: none;}
+  #focus .forward .top-border,
+  #focus .forward .top-border .wrap {position: static;}
+  #focus .forward .top-border .wrap > .logo-box {width: 100%; text-align: center;}
+  #focus .forward .top-border .wrap > .logo-box img {width: 86px;}
+  #focus .forward .top-border .wrap > .fr .search-box {position: absolute; z-index: 2; left: 50%; bottom: 10px; margin: 0; padding: 0; border: none;}
+  #focus .forward .abs .wrap .ib .btn-box {display: none;}
+}

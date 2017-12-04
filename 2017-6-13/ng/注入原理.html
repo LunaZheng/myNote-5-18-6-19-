@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<script>
+/*app.controller(function($scope, $http, $timeout) {
+
+})*/
+
+var app = {
+  controller: function(cb) {
+    var o = {
+      name: '摘星 abc',
+      age: 18,
+      age2: 17
+    }
+    var sFunc = cb.toString()
+    var arg = sFunc.match(/\([^()]+\)/)[0].replace(/\s+/g, '').match(/\w+/g)
+    cb.apply(null, arg.map(function(key) {
+      return o[key]
+    }))
+  }
+}
+
+app.controller(function(name, age, age2) {
+  console.log(name, age, age2)
+})
+
+</script>
+
+</body>
+</html>

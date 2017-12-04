@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<script>
+/*
+  js 数据类型
+
+  String
+  Number
+  Function
+  Boolean
+  Array
+  Object
+  RegExp
+  undefined
+*/
+
+/*var arr = [1,2,3]
+arr.forEach(function(val, idx, _arr) {
+  console.log(this)
+})*/
+
+if (!Array.prototype.forEach) {
+  Array.prototype.forEach = function(cb) {
+    for (var i = 0; i < this.length; i++) {
+      cb && cb(this[i], i, this)
+    }
+  }
+}
+</script>
+
+</body>
+</html>

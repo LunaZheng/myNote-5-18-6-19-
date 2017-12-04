@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<button style="position: fixed; right: 20px; bottom: 20px;">回到顶部</button>
+
+<script src="jq.js"></script>
+<script>
+  for (var i = 0; i < 500; i++) {
+    document.write('<div>'+i+'</div>')
+  }
+
+  $('button').on('click', function() {
+    // $(window).scrollTop(100)
+    $('scrollTop' in document.body ? 'body' : 'html').animate({
+      scrollTop: 0
+    }, 2000, 'linear', function() {
+      console.log('stop')
+    })
+  })
+</script>
+
+</body>
+</html>

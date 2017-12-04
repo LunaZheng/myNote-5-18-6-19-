@@ -1,0 +1,60 @@
+/* font-family: "PTSansRegular"; */
+@font-face {
+    font-family: "PT Sans";
+    src: url("font/PTSansRegular-ext.woff") format("woff");
+}
+/* font-family: "PTSansItalic"; */
+@font-face {
+    font-family: "PT Sans";
+    src: url("font/PTSansItalic.woff") format("woff");
+    font-style: italic;
+}
+/* font-family: "PTSansBold"; */
+@font-face {
+    font-family: "PT Sans";
+    src: url("font/PTSansBold-ext.woff") format("woff");
+    font-weight: bold;
+}
+
+/* font-family: "PTSansBold"; */
+@font-face {
+    font-family: "BadScript";
+    src: url("font/BadScriptRegular.eot");
+    src: url("font/BadScriptRegular.eot?#iefix")format("embedded-opentype"),
+    url("font/BadScriptRegular.woff") format("woff"),
+    url("font/BadScriptRegular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+/* В -ext версии шрифтов отрисовал и добавил значок турецкой лиры */
+
+
+@font-face{
+  font-family:'icomoon';
+  src:url('font/icomoon.eot');
+  src:url('font/icomoon.eot?#iefix') format('embedded-opentype'),url('font/icomoon.woff') format('woff'),url('font/icomoon.ttf') format('truetype'),url('font/icomoon.svg#icomoon') format('svg');
+  font-weight:normal;
+  font-style:normal
+}
+@font-face{
+  font-family:'tm-icomoon';
+  src:url('font/tm-icomoon.eot?d=505');
+  src:url('font/tm-icomoon.eot?d=505#iefix') format('embedded-opentype'),url('font/tm-icomoon.ttf?d=505') format('truetype'),url('font/tm-icomoon.woff?d=505') format('woff'),url('font/tm-icomoon.svg?d=505#tm-icomoon') format('svg');
+  font-weight:normal;
+  font-style:normal
+}
+@font-face{
+  font-family:"BadScript";
+  src:url("font/BadScriptRegular.eot");
+  src:url("font/BadScriptRegular.eot?#iefix") format("embedded-opentype"),url("font/BadScriptRegular.woff") format("woff"),url("font/BadScriptRegular.ttf") format("truetype");
+  font-style:normal;
+  font-weight:normal
+}
+@font-face{
+  font-family:"BadScript";
+  src:url("font/BadScriptRegular.eot");
+  src:url("font/BadScriptRegular.eot?#iefix") format("embedded-opentype"),url("font/BadScriptRegular.woff") format("woff"),url("font/BadScriptRegular.ttf") format("truetype");
+  font-style:normal;
+  font-weight:normal
+}

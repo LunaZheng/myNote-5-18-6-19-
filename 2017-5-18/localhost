@@ -1,0 +1,1 @@
+javascript: var h = location.href; location.href = 'http://localhost' + h.substring(h.indexOf('/www/') + 4);

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Codding.cn | By 摘星fy</title>
+  <link rel="shortcut icon" type="image/x-icon" href="static/img/favico.ico?d">
+  <link rel="stylesheet" href="static/boot/css/bootstrap.css">
+  <link rel="stylesheet" href="static/css/all.css">
+</head>
+<body>
+
+<div id="app">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Codding.cn</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+          <ul class="nav navbar-nav">
+            <li class="active">
+              <a href="javascript:" l>首页</a>
+            </li>
+            <li>
+              <a href="javascript:" l>作品</a>
+            </li>
+            <li>
+              <a href="javascript:" l>朋友</a>
+            </li>
+            <li>
+              <a href="javascript:" l>关于</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right hidden-sm">
+            <li role="presentation" class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
+                Language
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="javascript:" onclick="localStorage.lang=''; L.translate()">中文</a>
+                </li>
+                <li>
+                  <a href="javascript:" onclick="localStorage.lang='en'; L.translate()">English</a>
+                </li>
+                <li>
+                  <a href="javascript:" onclick="localStorage.lang='jp'; L.translate()">Japanes</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:" l>登录</a>
+            </li>
+            <li>
+              <a href="javascript:" l>注册</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-box">
+    <div class="page"
+      v-if="router.pageOut == '首页'"
+    >
+      <page-index></page-index>
+    </div>
+    <div class="page"
+      v-else-if="router.pageOut == '作品'"
+    >
+      <div>作品</div>
+    </div>
+    <div class="page"
+      v-else-if="router.pageOut == '朋友'"
+    >
+      <div>朋友</div>
+    </div>
+    <div class="page"
+      v-else-if="router.pageOut == '关于'"
+    >
+      <div>关于</div>
+    </div>
+  </div>
+</div>
+
+<script src="static/js/vue.js"></script>
+<script src="static/js/jq.js"></script>
+<script src="static/js/g.js"></script>
+<script src="static/js/translate.js"></script>
+<script src="static/boot/js/bootstrap.min.js"></script>
+<script>
+
+</script>
+
+</body>
+</html>

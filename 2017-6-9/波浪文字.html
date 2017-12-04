@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  body {background: #666;}
+  @keyframes wave {
+    0% {background-position: 0% bottom;}
+    100% {background-position: -10000% bottom;}
+  }
+  #wave {display: inline-block; font-size: 200px;}
+  #wave > div {color: transparent;
+    background: #fff url(img/wave.png) repeat-x 0 bottom;
+    -webkit-background-clip: text;
+    animation: wave 60s linear infinite;
+  }
+</style>
+
+<div id="wave">
+  <div>摘星fy</div>
+</div>
+
+</body>
+</html>

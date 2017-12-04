@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<script>
+  // 定时向服务器发请求，检测状态
+  setInterval(function() {
+    $.get('后台接口', {
+      a: '查过期'
+    }, function(data) {
+      if (new Date() / 1000 - data.time > '15天') {
+        // 发短信
+      }
+    }, 'json')
+  }, 60 * 1000)
+</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<button>点我</button>
+<div id="box" style="width: 300px; height: 300px; background: orange;"></div>
+
+<script src="jq.js"></script>
+<script>
+$('button').on('click', function(e) {
+  // fadeIn fadeOut fadeToggle
+  $('#box').fadeToggle()
+})
+</script>
+
+</body>
+</html>

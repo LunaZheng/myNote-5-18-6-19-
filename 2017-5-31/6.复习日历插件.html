@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<input type="text" data-calendar>
+<input type="text" data-calendar>
+
+<style>
+  * {padding: 0; margin: 0; list-style: none;}
+  body {background: #eee; font-size: 14px;}
+  .calendar {width: 210px; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,.2); position: absolute; left: 100px; top: 100px;}
+  .calendar .fl {float: left;}
+  .calendar .fr {float: right;}
+  .calendar .title {text-align: center; background: #ddd; line-height: 34px;}
+  .calendar .week,
+  .calendar .days {overflow: hidden;}
+  .calendar li {width: 30px; height: 30px; float: left; text-align: center; line-height: 30px; cursor: pointer;}
+  .calendar li.on {background: #f90; color: #fff;}
+  .calendar li.cur {background: #09f; color: #fff;}
+  .calendar li.past {opacity: .5;}
+</style>
+
+<div class="calendar">
+  <div class="title">
+    <div class="fl prev">&lt;</div>
+    <div class="fr next">&gt;</div>
+    <div class="c">
+      <select class="year">
+        <option value="2017">2017</option>
+        <option value="2017">2017</option>
+        <option value="2017">2017</option>
+      </select>
+      <select class="month">
+        <option value="0">1</option>
+        <option value="1">2</option>
+        <option value="2">3</option>
+        <option value="3">4</option>
+        <option value="4">5</option>
+        <option value="5">6</option>
+        <option value="6">7</option>
+        <option value="7">8</option>
+        <option value="8">9</option>
+        <option value="9">10</option>
+        <option value="10">11</option>
+        <option value="11">12</option>
+      </select>
+    </div>
+  </div>
+  <div class="week">
+    <ul>
+      <li>日</li>
+      <li>一</li>
+      <li>二</li>
+      <li>三</li>
+      <li>四</li>
+      <li>五</li>
+      <li>六</li>
+    </ul>
+  </div>
+  <div class="days">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<script src="jq.js"></script>
+<script>
+Date.prototype.date = function(format) {
+  var o = {
+    y: this.getFullYear(),
+    m: this.getMonth() + 1,
+    d: this.getDate(),
+    h: this.getHours(),
+    i: this.getMinutes(),
+    s: this.getSeconds(),
+  }
+  return (format || 'y-m-d h:i:s').replace(/y|m|d|h|i|s/g, function(key) {
+    return o[key]
+  })
+}
+
+;(function () {
+  var oDate = new Date()
+  var c = $('.calendar')
+  var prev = c.find('.prev')
+  var next = c.find('.next')
+  var selectYear = c.find('.year')
+  var selectMonth = c.find('.month')
+  var daysUl = c.find('.days ul')
+
+  fillLayout()
+
+  prev.on('click', function() {
+    oDate.setMonth(oDate.getMonth() - 1)
+    fillLayout()
+  })
+
+  next.on('click', function() {
+    oDate.setMonth(oDate.getMonth() + 1) 
+    fillLayout()
+  })
+
+  selectYear.on('change', function() {
+    oDate.setFullYear(this.value)
+    fillLayout()
+  })
+
+  selectMonth.on('change', function() {
+    var _oDate = new Date(oDate.toString())
+    _oDate.setMonth(this.value)
+    if (_oDate.getDate() !== oDate.getDate()) {
+      oDate.setDate(1)
+    }
+    oDate.setMonth(this.value)
+    fillLayout()
+  })
+
+  daysUl.on('click', 'li', function() {
+    var li = this
+    oDate.setDate(li.innerHTML)
+    fillLayout()
+  })
+
+  function fillLayout() {
+    var sLi = ''
+    var 本月 = new Date(oDate.toString())
+    本月.setDate(1)
+    本月.setMonth(本月.getMonth() + 1)
+    本月.setDate(0)
+
+    var 上月 = new Date(oDate.toString())
+    上月.setDate(1)
+    var 上个月剩多少天 = 上月.getDay()
+    上月.setDate(0)
+    var 上月最后一天 = 上月.getDate()
+
+
+    sLi += new Array(上个月剩多少天).fill().map(function(_, idx) {
+      return '<li class="past">'+(idx + 上月最后一天 - 上个月剩多少天 + 1)+'</li>'
+    }).join('')
+
+    var 今天 = new Date()
+    sLi += new Array(本月.getDate()).fill().map(function(_, idx) {
+      var day = (idx + 1)
+      var sOn = ''
+      if (oDate.getDate() === day) {
+        sOn += 'cur'
+      }
+      if (
+        今天.getFullYear() === oDate.getFullYear() &&
+        今天.getMonth() === oDate.getMonth() &&
+        今天.getDate() === day
+      ) {
+        sOn += ' on'
+      }
+      return '<li class="' + sOn + '">' + day + '</li>'
+    }).join('')
+
+    daysUl.html(sLi)
+
+
+    var year = oDate.getFullYear()
+    selectYear.html(new Array(100).fill().map(function(_, idx) {
+      var iYear = idx + year - 50
+      return '<option value="'+iYear+'">'+iYear+'</option>'
+    }).join('')).val(year)
+
+    selectMonth.val(oDate.getMonth())
+  }
+
+})();
+
+
+// $('input[data-calendar]').calendar()
+
+</script>
+
+</body>
+</html>

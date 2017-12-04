@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<style>
+  * {padding: 0; margin: 0; list-style: none; box-sizing: border-box;}
+  body {background: #000;}
+  .c {text-align: center;}
+  #box {width: 400px; height: 300px; margin: 20px auto;
+    background: 
+      repeating-linear-gradient(#333 0px, #333 1px, transparent 1px, transparent 20px),
+      repeating-linear-gradient(90deg, #333 0px, #333 1px, transparent 1px, transparent 20px)
+    ;
+    background-size: 20px 20px;
+    border: 1px solid #333;
+    border-left: none;
+    border-top: none;
+    box-sizing: content-box;
+  }
+  #box ul {position: relative;}
+  #box ul li {width: 20px; height: 20px; background: orange; position: absolute; left: 20px; top: 20px; border: 1px solid #f60;}
+  #box ul.p li {border: none;}
+</style>
+
+<div class="c" style="font-size: 20px; color: #666; padding-top: 30px;">当前得分： <span id="score">1</span></div>
+
+<div id="box">
+  <ul class="snake"></ul>
+  <ul class="p"></ul>
+</div>
+
+<script>
+var box = document.getElementById('box')
+var snakeUl = box.children[0]
+var pointUl = box.children[1]
+var direction = '右'
+var initLen = 5
+var snake = new Array(initLen).fill().map(function(_, idx) {
+  return {
+    x: initLen - idx,
+    y: 1,
+  }
+})
+
+var score = document.getElementById('score')
+var randomPoints = []
+var col = parseInt(box.offsetHeight / 20)
+var row = parseInt(box.offsetWidth / 20)
+
+console.log(col, row)
+
+function rand(m, n) {
+  return Math.floor(Math.random() * (n - m + 1) + m)
+}
+
+function randColor(m, n) {
+  var color = parseInt(Math.random() * 0xffffff).toString(16)
+  while (color.length < 6) {
+    color = '0' + color
+  }
+  return '#' + color
+}
+
+document.onkeydown = function(e) {
+  var keyCode2Key = {
+    '37': '左',
+    '38': '上',
+    '39': '右',
+    '40': '下',
+  }
+  switch(keyCode2Key[e.keyCode]) {
+    case '左':
+      if (direction == '右') {
+        return
+      }
+      break
+    case '上':
+      if (direction == '下') {
+        return
+      }
+      break
+    case '右':
+      if (direction == '左') {
+        return
+      }
+      break
+    case '下':
+      if (direction == '上') {
+        return
+      }
+      break
+    default:
+      // unknown keyCode
+      return
+  }
+  direction = keyCode2Key[e.keyCode]
+}
+
+var timer = setInterval(function() {
+  var snakeHead = snake[0]
+  var _snakeHead = JSON.parse(JSON.stringify(snakeHead))
+  switch(direction) {
+    case '左':
+      _snakeHead.x--
+      break
+    case '上':
+      _snakeHead.y--
+      break
+    case '右':
+      _snakeHead.x++
+      break
+    case '下':
+      _snakeHead.y++
+      break
+  }
+  if (_snakeHead.x < 0) {
+    alert('撞墙了 - 左')
+    clearInterval(timer)
+    return
+  }
+  if (_snakeHead.x > row - 1) {
+    alert('撞墙了 - 右')
+    clearInterval(timer)
+    return
+  }
+  if (_snakeHead.y < 0) {
+    alert('撞墙了 - 上')
+    clearInterval(timer)
+    return
+  }
+  if (_snakeHead.y > col - 1) {
+    alert('撞墙了 - 下')
+    clearInterval(timer)
+    return
+  }
+  if (snake.some(function(item, idx) {
+    return _snakeHead.x === item.x && _snakeHead.y === item.y
+  })) {
+    alert('撞到自己了')
+    clearInterval(timer)
+    return
+  }
+  snake.unshift(_snakeHead)
+  var snakeFoot = snake.pop()
+
+  randomPoints.forEach(function(item, idx) {
+    
+  })
+
+  for (var i = 0; i < randomPoints.length; i++) {
+    var isColl = randomPoints[i].x == _snakeHead.x && randomPoints[i].y == _snakeHead.y
+    if (isColl) {
+      index = i
+      snake.push(snakeFoot)
+      randomPoints.splice(i, 1)
+      break
+    }
+  }
+  render()
+}, 200)
+
+render()
+function render() {
+  var x, y
+  if (col * row - snake.length < 10) {
+    alert('你赢了')
+    clearInterval(timer)
+    return
+  }
+  if (randomPoints.length == 0) {
+    for (var i = 0; i < 4; i++) {
+      x = rand(0, row - 1)
+      y = rand(0, col - 1)
+      while (snake.some(function(item) {
+        return item.x === x && item.y === y
+      }) || randomPoints.some(function(item) {
+        return item.x === x && item.y === y
+      })) {
+        x = rand(0, row - 1)
+        y = rand(0, col - 1)
+      }
+      randomPoints.push({
+        x: x,
+        y: y,
+        bgColor: randColor()
+      })
+    }
+  }
+  snakeUl.innerHTML = snake.map(function(item, idx) {
+    return '<li style="left: '+(item.x * 20)+'px; top: '+(item.y * 20)+'px;"></li>'
+  }).join('')
+
+  pointUl.innerHTML = randomPoints.map(function(item, idx) {
+    return '<li style="left: ' + (item.x * 20) + 'px; top: ' + (item.y * 20) + 'px; background: ' + item.bgColor + ';"></li>'
+  }).join('')
+
+  score.innerHTML = snake.length - initLen
+}
+</script>
+
+<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=273259755&site=qq&menu=yes" style="position: fixed; left: 20px; bottom: 20px; z-index: 999999; color: #09f; font-size: 12px; text-align: center; text-decoration: none;">Powered By <br> 摘星fy</a>
+
+</body>
+</html>

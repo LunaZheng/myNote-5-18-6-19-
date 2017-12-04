@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<script src="jq.js"></script>
+<script>
+$.get('data.json').then(function(data) {
+  console.log('then')
+}).fail(function() {
+  console.log('fail')
+}).catch(function() {
+  console.log('catch')
+}).done(function() {
+  console.log('done')
+}).always(function() {
+  console.log('always')
+})
+</script>
+
+</body>
+</html>

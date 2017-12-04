@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  #box {width: 200px; height: 200px; background: orange;
+    transition: 1s width, 1s .5s height;
+  }
+</style>
+<div id="box"></div>
+<script>
+  box.addEventListener('transitionend', function(e) {
+    console.log(e)
+  })
+  box.onclick = function() {
+    this.style.width = '500px'
+    this.style.height = '500px'
+  }
+</script>
+
+</body>
+</html>

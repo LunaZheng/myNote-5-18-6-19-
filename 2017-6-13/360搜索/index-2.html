@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>try</title>
+</head>
+<body>
+<style>
+  * {margin: 0; padding: 0; box-sizing: border-box; color: inherit; font: inherit; 
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  body,html {height: 100%;}
+  ul, li {list-style: none;}
+  a {text-decoration: none;}
+  .fl {float: left;}
+  .fr {float: right;}
+  .wrap {width: 1200px; margin: 0 auto;}
+  .clear:after {content: ''; display: inline-block; clear: both;}
+  nav {}
+  nav>ul>{}
+  nav>ul>li {display: inline-block; margin-left: 10px; position: relative; padding: 5px;}
+  nav>ul>li:last-child {}
+  nav>ul>li:last-child ul {position: absolute; left: -15px; display: none;}
+  nav>ul>li:last-child ul li {width: 80px; border: 1px solid #ddd; padding: 5px; text-align: center;}
+  nav>ul>li:last-child:hover ul {display: inline-block;}
+  nav>ul>li:last-child ul li:hover {background: orange;}
+  #search-box {width: 100%; height: 100%; position: relative;}
+  #search-box input {width: 500px; height: 44px; position: absolute; top: 50%; margin-left: -250px; left: 50%;}
+</style>
+
+<nav>
+  <ul>
+    <li>新闻</li>
+    <li>视频</li>
+    <li>图片</li>
+    <li>音乐</li>
+    <li>地图</li>
+    <li>百科</li>
+    <li>英文</li>
+    <li>更多 v
+      <ul>
+        <li>问答</li>
+        <li>软件</li>
+        <li>指数</li>
+        <li>学术</li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<div id="search-box">
+  <input type="text" v-model="word">
+  <div>{{word}}</div>
+</div>
+
+<script src="vue.js"></script>
+<script src="jq.js"></script>
+<script :src="'https://sug.so.360.cn/suggest?callback=suggest_so&encodein=utf-8&encodeout=utf-8&format=json&fields=word&word=' + word"></script>
+
+<script>
+var vm = new Vue({
+  el: '#search-box',
+  data() {
+    return {
+      'word': 'a'
+    }
+  },
+  watch: {
+    'word': function(newVul) {
+      var vm = this
+      word = newVul
+      console.log(vm.getData())
+    }
+  },
+  methods: {
+    jsonp(url, data, cbName, fuSucc, fuFail) {
+      data[cbName] = ('jsonp_' + Math.random()).replace('.', '')
+      var arr = []
+      for(key in data) {
+        arr.push(key + '=' + data[key])
+      }
+
+      window[data[cbName]] = function(data) {
+        fuSucc && fuSucc()
+      }
+
+      var s = document.creatElement('script')
+      s.src = url + '?' + arr.join('&')
+      document.body.appendChild(s)
+      s.onerror = fnFaild
+    },
+    getData() {
+      var vm = this
+      
+    }
+  },
+  mounted() {
+    
+  }
+})
+
+</script>
+
+</body>
+</html>

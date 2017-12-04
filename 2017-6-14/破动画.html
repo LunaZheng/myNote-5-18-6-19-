@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  @keyframes ani {
+    0% {margin-left: -200%; transform: rotate(0deg) translateY(0px);}
+    20% {margin-left: 0; transform: rotate(0deg) translateY(0px);}
+    40% {margin-left: 0; transform: rotate(0deg) translateY(0);}
+    50% {margin-left: 0; transform: rotate(0deg) translateY(-100px);}
+    60% {margin-left: 0; transform: rotate(0deg) translateY(100px);}
+    70% {margin-left: 0; transform: rotate(0deg) translateY(0px);}
+    80% {margin-left: 0; transform: rotate(0deg) translateY(0px);}
+    90% {margin-left: 0; transform: rotate(360deg) translateY(0px);}
+    100% {}
+  }
+  img {
+    margin-left: 0;
+    transform: rotate(360deg) translateY(0px);
+  }
+  img.on {
+    animation: ani 2s linear;
+  }
+</style>
+<div style="text-align: center;">
+  <img id="img" src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" width="300" alt="">
+</div>
+
+<script src="a.js"></script>
+<script src="b.js"></script>
+<script src="c.js"></script>
+<script>
+  window.onload = function() {
+    var img = document.getElementById('img')
+    img.className = 'on'
+  }
+</script>
+
+</body>
+</html>

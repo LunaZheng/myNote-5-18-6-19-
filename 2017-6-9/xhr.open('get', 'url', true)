@@ -1,0 +1,25 @@
+xhr.open('get', 'url', true)
+
+$.get('url', 'data', succ)
+$.post('url', 'data', succ)
+
+$.ajax({
+  url: '',
+  async: true, // 异步
+  cache: true,
+  dataType: 'jsonp',
+  beforeSend: function() {
+
+  },
+  context: document.body,
+  crossDomain: true,
+  success() {
+    this
+  }
+})
+
+$.get('url', 'data', 'succ', 'json')
+
+$.ajax({ url: "test.html", context: document.body, success: function(){
+    $(this).addClass("done");
+}});

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<div id="app">
+  <input type="text">
+  <style>
+    .box {width: 100px; height: 100px; position: absolute; left: 100px; top: 100px; background: orange; border-radius: 50%;
+      --webkit-user-select: none;
+      --moz-user-select: none;
+      --ms-user-select: none;
+      --o-user-select: none;
+      -user-select: none;
+    }
+  </style>
+  <div class="box">123456</div>
+  <div class="box" style="left: 300px;">123456</div>
+</div>
+<script>
+var app = document.getElementById('app')
+
+app.onselectstart = function(e) {
+  console.log('d')
+  e = e || window.event
+  e.returnValue = false
+  e.preventDefault && e.preventDefault()
+}
+
+app.onmousedown = function(e) {
+  var target = e.target
+  var box = target.closest('.box')
+  if (!box) {
+    return
+  }
+  var x1 = e.clientX
+  var y1 = e.clientY
+  var originX = box.offsetLeft
+  var originY = box.offsetTop
+
+  document.onmousemove = function(e) {
+    var x2 = e.clientX
+    var y2 = e.clientY
+    box.style.left = x2 - x1 + originX + 'px'
+    box.style.top = y2 - y1 + originY+ 'px'
+  }
+
+  document.onmouseup = function(e) {
+    this.onmousemove = this.onmouseup = null
+  }
+}
+</script>
+
+</body>
+</html>

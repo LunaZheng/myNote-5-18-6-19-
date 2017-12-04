@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<script>
+  outer: for (var i = 0; i < 3; i++) {
+    inner: for (var j = 0; j < 2; j++) {
+      if (i === 1 && j === 1) {
+        break outer
+      }
+      console.log(i, j)
+    }
+  }
+</script>
+
+</body>
+</html>

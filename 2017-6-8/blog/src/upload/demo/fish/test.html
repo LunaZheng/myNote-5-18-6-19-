@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<canvas id="c" style="background: orange"></canvas>
+<img src="img/number_black.png" alt="">
+<script src="js/resource.es6.js"></script>
+<script>
+window.onload = function() {
+  var c = document.getElementById('c')
+  var gd = c.getContext('2d')
+  var oImg = document.getElementsByTagName('img')[0]
+  gd.drawImage(
+    oImg,
+    0, 0, 20, 24,
+    0, 0, 20, 24
+  )
+}
+
+</script>
+
+</body>
+</html>

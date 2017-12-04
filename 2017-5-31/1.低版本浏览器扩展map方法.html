@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<script>
+if (!Array.prototype.map) {
+  Array.prototype.map = function(cb) {
+    var result = []
+    for (var i = 0; i < this.length; i++) {
+      var _result = cb(this[i], i, this)
+      result.push(_result)
+    }
+    return result
+  }
+}
+
+var arr = [1,2,3]
+var _arr = arr.map(function(val, idx, arr) {
+  return val * 10
+})
+console.log(_arr)
+</script>
+
+</body>
+</html>

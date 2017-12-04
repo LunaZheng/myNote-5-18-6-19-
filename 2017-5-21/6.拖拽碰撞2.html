@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<div id="app">
+  <input type="text">
+  <style>
+    .box {width: 100px; height: 100px; position: absolute; left: 100px; top: 100px; background: orange; border-radius: 50%;
+      --webkit-user-select: none;
+      --moz-user-select: none;
+      --ms-user-select: none;
+      --o-user-select: none;
+      -user-select: none;
+      margin: -50px;
+    }
+  </style>
+  <div class="box">123456</div>
+  <div class="box" style="left: 300px;">123456</div>
+</div>
+<script>
+;(function() {
+  var app = document.getElementById('app')
+
+  app.onmousedown = function(e) {
+    e.preventDefault()
+    var target = e.target
+    var box = target.closest('.box')
+    clearInterval(box.timer)
+    if (!box) {
+      return
+    }
+    var x1 = e.clientX
+    var y1 = e.clientY
+
+    box.originX = box.offsetLeft
+    box.originY = box.offsetTop
+    box.style.margin = 0
+    box.style.left = box.originX + 'px'
+    box.style.top = box.originY + 'px'
+
+    var vx = 0
+    var vy = 0
+
+    var lastX = x1
+    var lastY = y1
+
+
+    document.onmousemove = function(e) {
+      var x2 = e.clientX
+      var y2 = e.clientY
+
+      box.style.left = x2 - x1 + box.originX + 'px'
+      box.style.top = y2 - y1 + box.originY+ 'px'
+
+      vx = x2 - lastX
+      vy = y2 - lastY
+
+      lastX = x2
+      lastY = y2
+    }
+
+    document.onmouseup = function(e) {
+      this.onmousemove = this.onmouseup = null
+
+      var x = box.offsetLeft
+      var y = box.offsetTop
+
+      clearInterval(box.timer)
+      box.timer = setInterval(function() {
+
+        vy += 1
+
+        x += vx
+        y += vy
+
+        if (x <= 0) {
+          x = 0
+          vx *= -.8
+          vy *= .8
+        }
+        if (x >= document.documentElement.clientWidth - box.offsetWidth) {
+          x = document.documentElement.clientWidth - box.offsetWidth
+          vx *= -.8
+          vy *= .8
+        }
+        if (y <= 0) {
+          y = 0
+          vx *= .8
+          vy *= -.8
+        }
+        if (y >= document.documentElement.clientHeight - box.offsetHeight) {
+          y = document.documentElement.clientHeight - box.offsetHeight
+          vx *= .8
+          vy *= -.8
+        }
+
+        box.style.left = x + 'px'
+        box.style.top = y + 'px'
+
+        if (Math.abs(vx) < 1 && Math.abs(vy) < 1 && Math.abs(box.offsetTop - (document.documentElement.clientHeight - box.offsetHeight)) < 1) {
+          console.log('stop')
+          clearInterval(box.timer)
+        }
+      }, 1000 / 60)
+    }
+  }
+})();
+</script>
+
+</body>
+</html>

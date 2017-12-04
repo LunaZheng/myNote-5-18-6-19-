@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    * {padding: 0; margin: 0; list-style: none;}
+    body {background: #000;}
+    canvas {vertical-align: top;}
+  </style>
+</head>
+<body>
+  
+<canvas id="c"></canvas>
+<script>
+function d2a(deg) {
+  return deg / 180 * Math.PI
+}
+
+function rand(m, n) {
+  return Math.floor(Math.random() * (n - m + 1) + m)
+}
+
+function randColor(a) {
+  /*var c = parseInt(Math.random() * 0xffffff).toString(16)
+  while (c.length < 6) {
+    c = '0' + c
+  }
+  return '#' + c*/
+  var o = {
+    'r': rand(0,255),
+    'g': rand(0,255),
+    'b': rand(0,255),
+    'a': a === undefined ? 1 : a
+  }
+  o.toString = function() {
+    return 'rgba(' + o.r + ',' + o.g + ',' + o.b + ',' + o.a + ')'
+  }
+  return o
+}
+
+var c = document.getElementById('c')
+var gd = c.getContext('2d')
+var 二踢脚s = []
+var dots = []
+var W, H
+var isLoaded = false
+
+window.onload = window.onresize = function() {
+  isLoaded = true
+  W = document.documentElement.clientWidth
+  H = document.documentElement.clientHeight
+
+  c.width = W
+  c.height = H
+
+  c.onclick = c.onmousemove = function(e) {
+    二踢脚s.push({
+      x: e.clientX,
+      y: e.clientY,
+      curY: H
+    })
+  }
+}
+
+setInterval(function() {
+  if (!isLoaded) {
+    return
+  }
+
+  gd.clearRect(0, 0, W, H)
+
+  for (var i = 0, len = 二踢脚s.length; i < len; i++) {
+    if (二踢脚s[i].y == 二踢脚s[i].curY) {
+      var 二踢脚 = 二踢脚s.splice(i, 1)[0]
+
+      ;(function(二踢脚) {
+        var len = 5
+        new Array(len).fill().map(function(_, idx) {
+          dots.push({
+            x: 二踢脚.x,
+            y: 二踢脚.y,
+            speedX: rand(-10, 10),
+            speedY: rand(-15, -5),
+            fillColor: randColor(),
+          })
+        })
+      })(二踢脚);
+
+      i--
+      len--
+    }
+  }
+
+  for (var i = 0; i < dots.length; i++) {
+    var dot = dots[i]
+    if (
+      dot.x < 0 ||
+      dot.x > W ||
+      dot.y > H
+    ) {
+      dots.splice(i, 1)
+      i--
+    }
+  }
+
+  // gd.fillStyle = 'red'
+  二踢脚s.forEach(function(二踢脚, idx) {
+    var speedY = (二踢脚.y - 二踢脚.curY) / 5
+    speedY = Math.floor(speedY)
+    二踢脚.curY += speedY
+    gd.fillStyle = 'rgba(255,0,0,'+(1 - (二踢脚.y / 二踢脚.curY))+')'
+    gd.fillRect(二踢脚.x, 二踢脚.curY, 4, 20)
+  })
+
+  dots.forEach(function(dot, idx) {
+    dot.speedY += .5
+    dot.x += dot.speedX
+    dot.y += dot.speedY
+    gd.fillStyle = dot.fillColor
+    // gd.fillRect(dot.x, dot.y, 30, 30)
+
+    gd.beginPath()
+    gd.arc(dot.x, dot.y, 10, 0, 2 * Math.PI)
+    gd.closePath()
+    dot.fillColor.a = 1 - (dot.y / H)
+    gd.fillStyle = dot.fillColor.toString()
+    gd.fill()
+  })
+
+}, 13)
+</script>
+
+<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=273259755&site=qq&menu=yes" style="position: fixed; left: 20px; bottom: 20px; z-index: 999999; color: #09f; font-size: 12px; text-align: center; text-decoration: none;">Powered By <br> 摘星fy</a>
+
+</body>
+</html>

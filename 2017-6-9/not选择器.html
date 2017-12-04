@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<ul class="shopping-list" id="awesome">
+  <li><span>Milk</span></li>
+  <li class="favorite" id="must-buy"><span class="highlight">Sausage</span></li>
+</ul>
+<style>
+  #awesome .favorite:not(#awesome) .highlight {color: red;}
+  #awesome .highlight:nth-of-type(1):nth-last-of-type(1) {color: blue;}
+</style>
+
+行内 > id > class > tag > *
+
+<div id="box">
+  <div class="in">
+    <ul>
+      <li>123456</li>
+    </ul>
+  </div>
+</div>
+
+<style>
+  #box {}
+  #box .in ul {}
+  #box .in ul li {color: red}
+  #box ul li {color: blue}
+</style>
+
+</body>
+</html>

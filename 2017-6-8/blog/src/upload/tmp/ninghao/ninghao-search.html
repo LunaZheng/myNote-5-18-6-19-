@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+<style>
+	* {padding: 0; margin: 0; list-style: none; box-sizing: border-box; font-size: 14px; font-family: "microsoft Yahei";}
+	body {padding: 15px;}
+	#box {line-height: 1.5em;}
+	#box ul {white-space: nowrap;}
+	#box ul li {width: 280px; background: #eee; margin: 0 10px 10px 0; float: left; padding: 5px 10px; position: relative;}
+	#box ul li > * {overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 1.5em;}
+	#box ul li .p {color: #666; font-size: 12px;}
+	#box ul li a {position: absolute; left: 0; top: 0; width: 100%; height: 100%;}
+	#txt {width: 300px; height: 30px; border: 1px solid #ccc; text-indent: .5em; border-radius: 2px; margin-bottom: 20px;}
+	{border: 11px solid #000;}
+</style>
+<div id="box">
+	<div>
+		<input type="text" id="txt">
+	</div>
+	<ul></ul>
+</div>
+<script src="/jq.js"></script>
+<script>
+$.getJSON('ninghao.json', function(data) {
+	$('#box ul').html(data.map(function(v) {
+		return (
+			'<li>'+
+				'<div class="h3">'+v.h3+'</div>'+
+				'<div class="p">'+v.p+'</div>'+
+				'<a href="'+v.url+'" target="_blank"></a>'+
+			'</li>'
+		)
+	}).join('')).children().each(function(idx) {
+		this.data = data[idx]
+	})
+})
+$('#txt').on('input', function() {
+	var val = this.value
+	if (!val) {
+		$('#box li').css({
+			display: ''
+		})
+		return
+	}
+	val = val.split(/\s+/)
+	var li = $('#box ul').children().each(function() {
+		var d = this.data
+		this.style.display = val.some(function(v) {
+			return v && ((d.p || '').toLowerCase().indexOf(v) > -1 || (d.h3 || '').toLowerCase().indexOf(v) > -1)
+		}) ? '' : 'none'
+	})
+})
+
+$(document).on('keydown', function(e) {
+	if (e.keyCode == 70 && e.ctrlKey) {
+		$('#txt').focus()
+		return false
+	}
+})
+</script>
+
+</body>
+</html>

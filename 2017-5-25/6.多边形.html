@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  body {background: #ddd;}
+  svg {background: #fff; width: 500px; height: 500px;}
+</style>
+
+<svg>
+  <polygon points="100,100 200,200 200,100"></polygon>
+</svg>
+
+<script>
+var el = document.getElementsByTagName('polygon')[0]
+
+function rand(m, n) {
+  return Math.floor(Math.random() * (n - m + 1) + m)
+}
+
+var arr = new Array(10).fill().map(function(_, idx) {
+  return {
+    x: rand(0, 500),
+    y: rand(0, 500),
+    vx: 10,
+    vy: 10,
+  }
+})
+
+function loop() {
+  requestAnimationFrame(function() {
+    render()
+    loop()
+  })
+}
+loop()
+
+render()
+function render() {
+  arr.forEach(function(p) {
+    p.x += p.vx
+    p.y += p.vy
+    if (p.x < 0) {
+      p.x = 0
+      p.vx = -p.vx
+    }
+    if (p.x > 500) {
+      p.x = 500
+      p.vx = -p.vx
+    }
+    if (p.y < 0) {
+      p.y = 0
+      p.vy = -p.vy
+    }
+    if (p.y > 500) {
+      p.y = 500
+      p.vy = -p.vy
+    }
+  })
+  el.setAttribute('points', arr.map(function(p, idx) {
+    return p.x + ',' + p.y
+  }).join(' '))
+}
+
+</script>
+
+</body>
+</html>

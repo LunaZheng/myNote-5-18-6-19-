@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<ul>
+  <li>aaaaaaa</li>
+</ul>
+
+<script src="jq.js"></script>
+<script>
+  $('<div>123456</div>').appendTo('body')
+  $('body').append('<div>456789</div>')
+
+  $('<li>bbbbbbbb</li>').prependTo('ul')
+  $('ul').prepend('<li>66666666</li>')
+</script>
+
+</body>
+</html>

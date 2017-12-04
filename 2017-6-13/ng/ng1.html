@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<div id="app" ng-controller="ctrl1">
+  {{ user.name }}
+  {{ user.age }}
+</div>
+
+<script src="angular.min.js"></script>
+<script>
+// 定义模块
+var app = angular.module('app', [])
+
+// 定义控制器
+app.controller('ctrl1', function($scope) {
+  $scope.user = {
+    name: '摘星fy',
+    age: 20
+  }
+})
+
+</script>
+
+</body>
+</html>

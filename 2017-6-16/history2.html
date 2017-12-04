@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<a href="#a">a</a>
+<a href="#b">b</a>
+<a href="#c">c</a>
+
+<button id="btn">btn</button>
+
+<script>
+// history.pushState({}, "页面标题", "xxx.html");
+var btn = document.getElementById('btn')
+btn.onclick = function() {
+  // history.pushState({}, "页面标题", "http://localhost/xxx");
+  history.replaceState({}, "页面标题", "http://localhost/xxx");
+}
+
+</script>
+
+</body>
+</html>

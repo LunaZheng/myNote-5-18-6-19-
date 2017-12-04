@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    body {background: #000; overflow: hidden;}
+    canvas {vertical-align: top; display: block;}
+  </style>
+</head>
+<body>
+  
+<canvas id="c"></canvas>
+<script>
+function rand(m, n) {
+  return Math.floor(Math.random() * (n - m + 1) + m)
+}
+
+var c = document.getElementById('c')
+var gd = c.getContext('2d')
+var dw = 0
+var dh = 0
+
+var ps = []
+var _ps = []
+
+gd.lineWidth = 1
+gd.strokeStyle = '#09f'
+
+window.onresize = function(e) {
+  dw = window.innerWidth
+  dh = window.innerHeight
+
+  c.width = dw
+  c.height = dh
+}
+window.onresize()
+
+ps = new Array(8).fill().map(function(_, idx) {
+  var vx = 0
+  var vy = 0
+  while (Math.abs(vx) < 2) {
+    vx = rand(-40, 40) / 10
+  }
+  while (Math.abs(vy) < 2) {
+    vy = rand(-40, 40) / 10
+  }
+  return {
+    x: rand(0, dw),
+    y: rand(0, dh),
+    vx,
+    vy,
+  }
+})
+
+function render() {
+  gd.clearRect(0, 0, dw, dh)
+  gd.beginPath()
+  ps.forEach(function(p, idx) {
+    p.x += p.vx
+    p.y += p.vy
+
+    if (p.x < 0) {
+      p.x = 0
+      p.vx = -p.vx
+    }
+    if (p.x > dw) {
+      p.x = dw
+      p.vx = -p.vx
+    }
+
+    if (p.y < 0) {
+      p.y = 0
+      p.vy = -p.vy
+    }
+    if (p.y > dh) {
+      p.y = dh
+      p.vy = -p.vy
+    }
+
+    gd.lineTo(p.x, p.y)
+  })
+  gd.closePath()
+  gd.strokeStyle = 'rgba(0,170,255,1)'
+  gd.stroke()
+
+  _ps.unshift(JSON.parse(JSON.stringify(ps)))
+  var maxLen = 20
+  _ps.length > maxLen && (_ps.length = maxLen)
+
+  _ps.forEach(function(ps, idx) {
+    if(idx < 1) {
+      return
+    }
+    gd.beginPath()
+    ps.forEach(function(p, _idx) {
+      gd.lineTo(p.x, p.y)
+    })
+    gd.closePath()
+    var a = 1 - idx / maxLen
+    gd.strokeStyle = 'rgba(0,170,255,'+a+')'
+    gd.stroke()
+  })
+}
+
+function loop() {
+  requestAnimationFrame(function() {
+    render()
+    loop()
+  })
+}
+loop()
+
+</script>
+
+<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=273259755&site=qq&menu=yes" style="position: fixed; left: 20px; bottom: 20px; z-index: 999999; color: #09f; font-size: 12px; text-align: center; text-decoration: none;">Powered By <br> 摘星fy</a>
+
+</body>
+</html>

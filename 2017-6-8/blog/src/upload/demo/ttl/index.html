@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ttl</title>
+</head>
+<body>
+<style>
+  * {padding: 0; margin: 0; list-style: none;}
+  html {background: #000;}
+
+  #ttl {width: 240px; height: 240px; position: absolute; left: 50%; top: 50%; margin: -120px; background: -rgba(0,255,0,.2);
+    transform-style: preserve-3d;
+    transform: perspective(600px) translateZ(-240px);
+  }
+  #ttl * {width: 100%; height: 100%; position: absolute; left: 0; top: 0;
+    transform-style: preserve-3d;
+  }
+  #ttl section {}
+  #ttl section ul {
+    transform: rotateY(90deg);
+  }
+  #ttl section ul li {}
+  @keyframes rotate{
+    0 {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+  }
+  #ttl section ul li div {background: url(circle.png);
+    animation: rotate 10s linear infinite;
+  }
+</style>
+<div id="ttl">
+  <section>
+    <ul>
+      <li>
+        <div></div>
+      </li>
+    </ul>
+  </section>
+</div>
+<script>
+var ttl = document.getElementById('ttl')
+var len = 60
+var deg = 360 / len
+
+ttl.innerHTML = new Array(len).fill().map(function(_, idx) {
+  return `
+    <section style="transform: rotateY(${idx * deg}deg) translateZ(240px)">
+      <ul>
+        <li style="transform: rotate(${idx * deg / 2}deg)">
+          <div></div>
+        </li>
+      </ul>
+    </section>
+  `
+}).join('')
+
+var x = 0
+var y = 0
+document.onmousedown = function(e) {
+  e.preventDefault()
+  var x1 = e.clientX
+  var y1 = e.clientY
+  var originX = x
+  var originY = y
+  this.onmousemove = function(e) {
+    var x2 = e.clientX
+    var y2 = e.clientY
+    x = x2 - x1 + originX
+    y = y2 - y1 + originY
+    ttl.style.transform = 'perspective(600px) translateZ(-240px) rotateY(' + x / 2 + 'deg) rotateX(' + -y / 2 + 'deg)'
+  }
+  this.onmouseup = function(e) {
+    this.onmousemove = this.onmouseup = null
+  }
+}
+</script>
+
+<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=273259755&site=qq&menu=yes" style="position: fixed; left: 20px; bottom: 20px; z-index: 999999; color: #09f; font-size: 12px; text-align: center; text-decoration: none;">Powered By <br> 摘星fy</a>
+
+</body>
+</html>

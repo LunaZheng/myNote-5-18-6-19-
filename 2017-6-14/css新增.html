@@ -1,0 +1,28 @@
+{
+  box-shadow: 0 0 10px red;
+  border-radius: 10px;
+
+  filter: blur(10px);
+
+  transition: 10s all;
+  transform: rotate(10deg);
+
+  display: -webkit-box;
+  -webkit-box-flex: 1;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  justify-content: flex-start;
+  justify-content: space-between;
+
+  /*倒影*/
+  -webkit-box-reflect: below 10px linear-gradient(transparent, rgba(0,0,0,.5));
+
+  /*ios表单默认有样式，你去不掉， 加了它就行*/
+  -webkit-appearance: none;
+
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+}

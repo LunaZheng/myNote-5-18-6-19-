@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<div id="app" ng-controller="ctrl1">
+  <form ng-submit="sendProfile($event)">
+    <input type="text" ng-model="user.name">
+    <input type="number" ng-model="user.age">
+    <input type="submit" value="提交">
+  </form>
+  <div>{{user.name}}</div>
+  <div>{{user.age}}</div>
+</div>
+
+<script src="angular.min.js"></script>
+<script>
+// 定义模块
+var app = angular.module('app', [])
+
+// 定义控制器
+app.controller('ctrl1', function($http, $scope) {
+  $scope.user = {
+    name: '摘星fy',
+    age: 20
+  }
+
+  $scope.sendProfile = function(e) {
+    var o = $http.post('x.php', $scope.user)
+    o.then(function(data) {
+      data = data.data
+      console.log(data)
+    }).catch(function() {
+      console.log('失败了')
+    }).finally(function() {
+      console.log('总是执行')
+    })
+  }
+})
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<script>
+var pro = new Promise(function(fnSucc, fnFaild) {
+  setTimeout(function() {
+    if (true) {
+      fnSucc('succ')
+    } else {
+      fnFaild('err')
+    }
+  }, 1000)
+})
+
+pro.then(function(msg) {
+  console.log(msg)
+  return 'abc'
+}).catch(function(err) {
+  console.log(err)
+  return 'def'
+}).then(function(msg) {
+  console.log(msg)
+}).catch(function(err) {
+  console.log(err)
+})
+
+console.log(pro)
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  * {padding: 0; margin: 0; list-style: none; font: inherit; text-decoration: none; color: inherit;}
+  #box {margin: 10px;}
+  #box ul {white-space: nowrap;}
+  #box ul li {display: inline-block; position: relative; background: #eee;}
+  #box ul li a {display: block; padding: 20px; position: relative; z-index: 2;}
+  #box ul li:after {content: ""; width: 100%; height: 4px; position: absolute; left: 0; bottom: 0; background: orange;
+    transition: .2s all;
+  }
+  #box ul li:hover:after {height: 100%;}
+</style>
+<div id="box">
+  <ul>
+    <li>
+      <a href="javascript:">轩枫阁</a>
+    </li>
+    <li>
+      <a href="javascript:">首页</a>
+    </li>
+    <li>
+      <a href="javascript:">移动前端</a>
+    </li>
+    <li>
+      <a href="javascript:">Web前端</a>
+    </li>
+    <li>
+      <a href="javascript:">授人以渔</a>
+    </li>
+    <li>
+      <a href="javascript:">UI设计</a>
+    </li>
+    <li>
+      <a href="javascript:">WP视点</a>
+    </li>
+    <li>
+      <a href="javascript:">朝花夕拾</a>
+    </li>
+    <li>
+      <a href="javascript:">程序人生</a>
+    </li>
+    <li>
+      <a href="javascript:">关于&留言</a>
+    </li>
+  </ul>
+</div>
+
+<script>
+  [].slice.call(document.querySelectorAll('#box li')).forEach(function(el, idx) {
+    el.onmouseenter = function(e) {
+      var src = './mp3/'+(idx % 9 + 1)+'.mp3'
+      var audio = document.createElement('audio')
+      // audio.autoplay = true
+      audio.oncanplay = function() {
+        this.play()
+      }
+      audio.src = src
+      /*for (var key in audio) {
+        console.log(key + '----' + audio[key])
+      }*/
+    }
+  })
+</script>
+
+</body>
+</html>

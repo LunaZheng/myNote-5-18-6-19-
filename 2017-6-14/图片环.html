@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style>
+  * {padding: 0; margin: 0; list-style: none;}
+  body {background: #000;}
+  #box {width: 200px; height: 200px; position: absolute; left: 50%; top: 50%; margin: -100px; z-index: 2;
+    transform-style: preserve-3d;
+    transform: perspective(600px) translateZ(-500px);
+  }
+  #box ul {height: 100%;
+    transform-style: preserve-3d;
+  }
+  #box ul li {width: 100%; height: 100%; position: absolute; left: 0; top: 0; 
+    background: url(http://p2.so.qhimgs1.com/t019757a294a300d7b2.jpg) no-repeat center / cover;
+    /*-webkit-box-reflect: below 1px linear-gradient(transparent, rgba(0,0,0,.2));*/
+  }
+</style>
+<div id="box">
+  <ul></ul>
+</div>
+<script>
+var box = document.getElementById('box')
+var ul = box.children[0]
+var len = 10
+var deg = 360 / len
+var timer = 0
+
+ul.innerHTML = new Array(len).fill().map(function(_, i) {
+  return '<li style="transform: rotateY('+i * deg+'deg) translateZ(500px)"></li>'
+}).join('')
+
+var x = 0
+var y = 0
+
+document.onmousedown = function(e) {
+  clearInterval(timer)
+  e.preventDefault()
+  var x1 = e.clientX
+  var y1 = e.clientY
+  var originX = x
+  var originY = y
+  var oldX = x1
+  var oldY = y1
+  var vx = 0
+  var vy = 0
+  document.onmousemove = function(e) {
+    var x2 = e.clientX
+    var y2 = e.clientY
+    x = x2 - x1 + originX
+    y = y2 - y1 + originY
+    ul.style.transform = 'rotateY(' + x / 4 + 'deg) rotateX(' + -y / 4 + 'deg)'
+    vx = x2 - oldX
+    vy = y2 - oldY
+    oldX = x2
+    oldY = y2
+  }
+  document.onmouseup = function(e) {
+    this.onmousemove = this.onmouseup = null
+    clearInterval(timer)
+    timer = setInterval(function() {
+      vx *= .98
+      vy *= .98
+      x += vx
+      y += vy
+      ul.style.transform = 'rotateY(' + x / 4 + 'deg) rotateX(' + -y / 4 + 'deg)'
+      if (Math.abs(vx) < 1 && Math.abs(vy) < 1) {
+        console.log('stop')
+        clearInterval(timer)
+      }
+    }, 1000 / 60)
+  }
+}
+</script>
+
+</body>
+</html>

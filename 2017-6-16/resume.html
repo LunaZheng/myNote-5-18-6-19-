@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="animate.css">
+  <style>
+    * {padding: 0; margin: 0; font: inherit; color: inherit; box-sizing: border-box;}
+    body {color: rgba(255,255,255,.8); overflow: hidden; background: #000;}
+    ul, li {list-style: none;}
+    a {text-decoration: none;}
+    h1 {line-height: 2em; border-bottom: 1px solid #ddd; font-size: 2em; margin-bottom: .5em;}
+    td {padding: .1em;}
+    li {margin-bottom: .2em;}
+
+    #bg {width: 100%; height: 100%; position: absolute; left: 0; top: 0;}
+    #bg:before {content: ""; width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: url(bg.jpg) no-repeat center / cover;
+      -webkit-filter: blur(20px);
+      -o-filter: blur(20px);
+      filter: blur(20px);
+    }
+    #bg:after {content: ""; width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: rgba(0,0,0,.3);}
+    #bg canvas {position: relative; z-index: 2;}
+
+    .div-2 > * {width: 50%; float: left;}
+
+    html,body {height: 100%;}
+    #resume {width: 100%; height: 100%; position: absolute; left: 0; top: 0; display: flex; z-index: 10;}
+    #resume > section {width: 100%; height: 100%; position: absolute; left: 0; top: -100%; display: flex; align-items: center; justify-content: center;
+      -transition: .3s top;
+    }
+    #resume > section > div {max-width: 80%;}
+    #resume .profile {white-space: nowrap;}
+    #resume > section:nth-child(1) {z-index: 6;}
+    #resume > section:nth-child(2) {z-index: 5;}
+    #resume > section:nth-child(3) {z-index: 4;}
+    #resume > section:nth-child(4) {z-index: 3;}
+    #resume > section:nth-child(5) {z-index: 2;}
+    #resume > section:nth-child(6) {z-index: 1;}
+    @keyframes up-down {
+      0% {transform: translateY(0px); opacity: 1;}
+      50% {transform: translateY(20px); opacity: .5;}
+      100% {transform: translateY(0px); opacity: 1;}
+    }
+    #resume .arrow-drop {width: 60px; height: 60px; -border: 1px solid #ccc; position: absolute; left: 50%; margin-left: -30px; bottom: 50px; border-radius: 4px; z-index: 10;
+      animation: up-down 1.5s linear infinite;
+    }
+    #resume .arrow-drop > div {border: 4px solid #aaa; border-left: none; border-top: none; transform: translateX(18px) translateY(12px) rotate(45deg); width: 20px; height: 20px;}
+
+    #resume .edu {}
+    #resume .edu ul {}
+    #resume .edu ul li {margin-bottom: 20px;}
+    #resume .work-his {}
+    #resume .work-his > div {}
+    #resume .work-his > div table {}
+    #resume .work-his > div table tr {}
+    #resume .work-his > div table tr td:nth-child(1) {white-space: nowrap;}
+    #resume .work-his > div table tr td ul {}
+    #resume .work-his > div table tr td ul li {padding: .3em;}
+  </style>
+</head>
+<body>
+
+<div id="bg">
+  <canvas id="c"></canvas>
+</div>
+<div id="resume">
+  <section class="profile">
+    <div>
+      <h1 class="animated">基本信息</h1>
+      <div class="div-2">
+        <div class="_1 animated">
+          <table class="align">
+            <tbody>
+              <tr>
+                <td>姓名：</td>
+                <td>田士贞</td>
+              </tr>
+              <tr>
+                <td>性别：</td>
+                <td>男</td>
+              </tr>
+              <tr>
+                <td>民族：</td>
+                <td>汉</td>
+              </tr>
+              <tr>
+                <td>学历：</td>
+                <td>统招本科</td>
+              </tr>
+              <tr>
+                <td>籍贯：</td>
+                <td>山东省 临清市 唐元镇</td>
+              </tr>
+              <tr>
+                <td>微信：</td>
+                <td>y273259755</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="_2 animated">
+          <table class="align">
+            <tbody>
+              <tr>
+                <td>出生日期：</td>
+                <td>1990-10-15</td>
+              </tr>
+              <tr>
+                <td>联系电话：</td>
+                <td>188-1857-1170</td>
+              </tr>
+              <tr>
+                <td>电子邮件：</td>
+                <td>273259755@qq.com</td>
+              </tr>
+              <tr>
+                <td>毕业院校：</td>
+                <td>山东工艺美术学院</td>
+              </tr>
+              <tr>
+                <td>工作经验：</td>
+                <td>4年</td>
+              </tr>
+              <tr>
+                <td>QQ：</td>
+                <td>
+                  <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=273259755&amp;site=qq&amp;menu=yes">273259755</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="edu">
+    <div>
+      <h1 class="animated">教育背景</h1>
+      <div>
+        <div class="time-line">
+          <ul>
+            <li class="animated">
+              <div class="date">2009.09 - 2013.06</div>
+              <p>
+                就读于山东工艺美术学院，主修服装设计与工程专业
+                <br>
+                闲暇之余，学习网站开发
+                <br>获得学士学位</p>
+            </li>
+            <li class="animated">
+              <div class="date">2006.08 - 2009.06</div>
+              <p>就读于临清实验高中</p>
+            </li>
+            <li class="animated">
+              <div class="date">2003.09 - 2006.06</div>
+              <p>就读于临清自忠中学</p>
+            </li>
+            <li class="animated">
+              <div class="date">1998.09 - 2003.06</div>
+              <p>就读于枣林小学</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="work-his">
+    <div>
+      <h1 class="animated">工作经历</h1>
+      <div class="animated">
+        <table>
+          <tbody>
+            <tr>
+              <td colspan="2">2015.11 - 2016.09</td>
+            </tr>
+            <tr>
+              <td>就 职 于 ：</td>
+              <td>深圳市爱普优科技有限公司</td>
+            </tr>
+            <tr>
+              <td>职　　位：</td>
+              <td>前端工程师</td>
+            </tr>
+            <tr>
+              <td>工作内容：</td>
+              <td>
+                <ul>
+                  <li>
+                    1. 负责公司官网开发，独立完成切图，高度还原设计图，并且做了响应式设计，兼容多平台，不基于任何css框架。独立完成翻译工作，支持中英文，访问
+                    <a href="http://appholly.com/product.html" target="_blank">http://appholly.com/product.html</a>
+                  </li>
+                  <li>
+                    2. 与c++配合，完成i-Funbox开发工作，独立完成前端开发工作，提供多种交互方式，供用户管理自己的苹果手机
+                    <a href="http://dl.i-funbox.com/ifunbox_setup.exe?7/8/2015.exe">点击下载</a>
+                  </li>
+                  <li>
+                    3. 与ios开发人员配合，开发了FileExpress web版管理工具，在浏览器中操作苹果手机文件，请在AppStore中搜索 iFileExpress
+                  </li>
+                  <li>4. 参与Game Today开发工作，负责web页面分享开发，请在AppStore中搜索GameToday</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section class="want">
+    <div>
+      <h1 class="animated">求职意向</h1>
+      <div class="animated">
+        <div style="white-space: normal;">
+          <div style="margin-bottom: 15px;"> <strong style="font-weight: bold;">由上至下，优先级依次降低</strong>
+          </div>
+          <ul class="listed">
+            <li>
+              1. 非常希望从事移动端开发工作，本人擅长多终端页面适配，并且有大量工作经验与技巧，遇到问题，提出解决方案，快速应用到工作中
+            </li>
+            <li>2. 从事PC端开发工作，希望公司能够更多的拥抱html5，拥抱未来</li>
+            <li>3. 熟悉nodejs，可从事nodejs开发</li>
+            <li>4. 擅长php mysql，可做后端业务开发工作</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="professional">
+    <div>
+      <div>
+        <h1 class="animated">专业技能</h1>
+        <div class="animated">
+          <ul class="listed">
+            <li>1. 熟练操作原生js，可以不基于任何框架，快速开发web应用</li>
+            <li>2. 多年的html、css开发经验，深谙浏览器之间的差异，快速定位问题</li>
+            <li>3. 能够使用Angular、React、jQuery、bootStrap等前端框架进行开发</li>
+            <li>4. fis、gulp、webpack... 独立搭配前端自动化环境</li>
+            <li>5. 能够使用es6语法编写nodejs，or使用babel，编译es6前端代码</li>
+            <li>6. 使用js操作svg、canvas绘制图形，制作酷炫的前端页面</li>
+            <li>7. 美术科班出身，能够熟练使用Photoshop做切图工作，无需设计帮助</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="evaluation">
+    <div>
+      <div>
+        <h1 class="animated">自我评价</h1>
+        <div class="animated">
+          <ul class="listed">
+            <li>1. 熟练操作原生js，可以不基于任何框架，快速开发web应用</li>
+            <li>2. 多年的html、css开发经验，深谙浏览器之间的差异，快速定位问题</li>
+            <li>3. 能够使用Angular、React、jQuery、bootStrap等前端框架进行开发</li>
+            <li>4. fis、gulp、webpack... 独立搭配前端自动化环境</li>
+            <li>5. 能够使用babel，编译es6前端代码</li>
+            <li>6. 使用js操作svg、canvas绘制图形，制作酷炫的前端页面</li>
+            <li>7. 美术科班出身，能够熟练使用Photoshop做切图工作，无需设计帮助</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+function rand(m, n) {
+  return Math.floor(Math.random() * (n - m + 1) + m)
+}
+
+function randColor(a) {
+  var o = {
+    r: rand(0, 255),
+    g: rand(0, 255),
+    b: rand(0, 255),
+    a: a === undefined ? 1 : a,
+  }
+  o.toString = function() {
+    return 'rgba(' + o.r + ', ' + o.g + ', ' + o.b + ', ' + o.a + ')'
+  }
+  return o
+}
+
+window.onload = function() {
+  /*var animated = secs[0].getElementsByClassName('animated')[0]
+  animated.classList.add(aniStyles[rand(0, aniStyles.length - 1)])*/
+
+  var aniStyles = [
+    'flash',
+    'pulse',
+    'rubberBand',
+    'shake',
+    'swing',
+    'tada',
+    'wobble',
+    'jello',
+    'bounceIn',
+    'bounceInDown',
+    'bounceInLeft',
+    'bounceInRight',
+    'bounceInUp',
+    // 'fadeIn',
+    // 'fadeInDown',
+    // 'fadeInDownBig',
+    // 'fadeInLeft',
+    // 'fadeInLeftBig',
+    // 'fadeInRight',
+    // 'fadeInRightBig',
+    // 'fadeInUp',
+    // 'fadeInUpBig',
+    'flip',
+    'flipInX',
+    'flipInY',
+    'lightSpeedIn',
+    'rotateIn',
+    'rotateInDownLeft',
+    'rotateInDownRight',
+    'rotateInUpLeft',
+    'rotateInUpRight',
+    'zoomIn',
+    'zoomInDown',
+    'zoomInLeft',
+    'zoomInRight',
+    'zoomInUp',
+    // 'hinge',
+    'rollIn',
+  ]
+
+  var curIndex = 0
+  var secs = [].slice.call(document.getElementsByTagName('section'))
+
+  ani()
+  function ani() {
+    secs.forEach(function(el, idx) {
+      ;[].slice.call(el.getElementsByClassName('animated')).forEach(function(el, idx) {
+        el.className = 'animated'
+      })
+      el.style.top = '-100%'
+    })
+    var curEl = secs[curIndex]
+    curEl.style.top = '0'
+    ;[].slice.call(curEl.getElementsByClassName('animated')).forEach(function(el, idx) {
+      var sAni = aniStyles[rand(0, aniStyles.length - 1)]
+      el.classList.add(sAni)
+    })
+  }
+
+  document.addEventListener('onmousewheel' in document ? 'mousewheel' : 'DOMMousescroll', function(e) {
+    var isUp = e.wheelDelta > 0 || e.detail < 0
+    isUp ? curIndex-- : curIndex++
+    if (curIndex < 0) {
+      curIndex = secs.length - 1
+    }
+    if (curIndex > secs.length - 1) {
+      curIndex = 0
+    }
+    ani()
+  })
+}
+
+;(function() {
+  var c = document.getElementById('c')
+  var gd = c.getContext('2d')
+  var dw = 0
+  var dh = 0
+  var points = []
+
+  var x = 0
+  var y = 0
+
+  document.onmousemove = function(e) {
+    x = e.clientX
+    y = e.clientY
+  }
+
+  window.onresize = function() {
+    dw = document.documentElement.clientWidth
+    dh = document.documentElement.clientHeight
+    c.width = dw
+    c.height = dh
+    x = dw / 2
+    y = dh / 2
+    var col = parseInt(dw / 40)
+    var row = parseInt(dh / 40)
+    points = new Array(col * row).fill().map(function(_, idx) {
+      var x = rand(0, dw)
+      var y = rand(0, dh)
+      var r = rand(100, 400) / 200
+      var vx = 0
+      var vy = 0
+      while (Math.abs(vx) < .1 && Math.abs(vy) < .1) {
+        vx = rand(-100, 100) / 100
+        vy = rand(-100, 100) / 100
+      }
+      return {
+        x: x,
+        y: y,
+        r: r,
+        vx: vx,
+        vy: vy,
+        lineColor: randColor(),
+        fillColor: randColor()
+      }
+    })
+  }
+  window.onresize()
+
+  setInterval(render, 1000 / 60)
+  function render() {
+    gd.clearRect(0, 0, dw, dh)
+
+    var nearPoints = []
+    points.forEach(function(p, idx) {
+      p.x += p.vx
+      p.y += p.vy
+      if (p.x < 0 || p.x > dw) {
+        p.vx = -p.vx
+      }
+      if (p.y < 0 || p.y > dh) {
+        p.vy = -p.vy
+      }
+
+      var a = x - p.x
+      var b = y - p.y
+      var c = Math.sqrt(a * a + b * b)
+      p.disC = c
+
+      if (c < 150) {
+        nearPoints.push(p)
+      }
+
+      gd.beginPath()
+      gd.arc(p.x, p.y, p.r, 0, 2 * Math.PI)
+      gd.closePath()
+      p.fillColor.a = c < 150 ? (1 - c / 150) / 5 : .1
+      gd.fillStyle = p.fillColor.toString()
+      gd.fill()
+    })
+
+    nearPoints.forEach(function(p, idx) {
+      p.arr = []
+      nearPoints.forEach(function(_p, _idx) {
+        if (p === _p) {
+          return
+        }
+        var a = p.x - _p.x
+        var b = p.y - _p.y
+        var c = Math.sqrt(a * a + b * b)
+        p.arr.push({
+          p: _p,
+          c: c
+        })
+      })
+    })
+
+    nearPoints.forEach(function(p) {
+      p.arr.sort(function(a, b) {
+        return a.c - b.c
+      })
+      if (p.arr.length > 4) {
+        p.arr.length = 4
+      }
+      p.arr.forEach(function(item) {
+        var _p = item.p
+        /*var a = x - _p.x
+        var b = y - _p.y
+        var c = Math.sqrt(a * a + b * b)*/
+        _p.lineColor.a = (1 - _p.disC / 150) / 5
+        gd.beginPath()
+        gd.lineTo(p.x, p.y)
+        gd.lineTo(_p.x, _p.y)
+        gd.strokeStyle = _p.lineColor.toString()
+        gd.stroke()
+      })
+    })
+  }
+
+})();
+</script>
+
+</body>
+</html>

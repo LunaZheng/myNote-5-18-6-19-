@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>test.html</title>
+</head>
+<body>
+  
+<style>
+  * {padding: 0; margin: 0; list-style: none;}
+  canvas {vertical-align: top; background: #000;}
+</style>
+<canvas id="c"></canvas>
+<script>
+function rand(m, n) {
+  return Math.round(Math.random() * (n - m) + m)
+}
+
+function hsla(h, s, l, a) {
+  var deg = 360 / len
+  var o = {}
+  o.h = h
+  o.s = '50%'
+  o.l = '50%'
+  o.a = a === undefined ? 1 : a
+  o.toString = function() {
+    return 'hsla(' + o.h + ',' + o.s + ',' + o.l + ',' + o.a + ')'
+  }
+  return o
+}
+
+var c = document.getElementById('c')
+var gd = c.getContext('2d')
+var len = 60
+var W, H, X, Y
+
+window.onresize = function() {
+  W = window.innerWidth
+  H = window.innerHeight
+  c.width = W
+  c.height = H
+  X = W / 2
+  Y = H / 2
+}
+window.onresize()
+
+document.onmousemove = function(e) {
+  X = e.clientX
+  Y = e.clientY
+}
+
+var len = 60
+var circles = new Array(len).fill().map(function(_, idx) {
+  var deg = 360 / len
+  return {
+    x: X,
+    y: Y,
+    strokeStyle: hsla(deg * idx, '50%', '50%', 1)
+  }
+})
+
+function render() {
+  gd.clearRect(0, 0, W, H)
+  circles.push(circles.shift())
+  circles.forEach(function(c, idx) {
+    gd.beginPath()
+    var speedX = (X - c.x) / (idx + 1)
+    var speedY = (Y - c.y) / (idx + 1)
+    c.x += speedX
+    c.y += speedY
+    gd.arc(c.x, c.y, idx * 3, 0, 2 * Math.PI)
+    gd.closePath()
+    c.strokeStyle.a = (len - idx) / len
+    gd.strokeStyle = c.strokeStyle.toString()
+    gd.stroke()
+  })
+}
+
+render()
+
+function loop() {
+  requestAnimationFrame(function() {
+    render()
+    loop()
+  })
+}
+loop()
+
+</script>
+
+<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=273259755&site=qq&menu=yes" style="position: fixed; left: 20px; bottom: 20px; z-index: 999999; color: #09f; font-size: 12px; text-align: center; text-decoration: none;">Powered By <br> 摘星fy</a>
+
+</body>
+</html>

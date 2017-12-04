@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<div id="box">
+  <ul>
+    <li>1</li>
+    <li><span>2</span></li>
+    <li><span>3</span></li>
+    <li><span>4</span></li>
+    <li><span>5</span></li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+    <li>10</li>
+  </ul>
+</div>
+
+<script>
+;(function($) {
+  $('li').find('span').css('color', 'red')
+})(function(arg) {
+  var els = []
+  switch (typeof arg) {
+    case 'string': // 选择器
+      els = [].slice.call(document.querySelectorAll(arg))
+      break
+    case 'function': // 等到DOM ready之后进行
+      document.addEventListener('DOMContentLoaded', arg, false)
+      break
+    case 'object': // 将原生对象转化为我们自己的
+      if (arg instanceof Array) {
+        arg.forEach(function(el, idx) {
+          els.push(el)
+        })
+      } else {
+        els.push(arg)
+      }
+      break
+  }
+
+  els.__proto__ = {
+    each: function(cb) {
+      for (var i = 0, len = this.length; i < len; i++) {
+        cb && cb.call(this[i], i, this[i], this)
+      }
+      return this
+    },
+    css: function(key, val) {
+      switch (arguments.length) {
+        case 1:
+          this.each(function() {
+            for (var i in key) {
+              this.style[i] = key[i]
+            }
+          })
+          break
+        case 2:
+          this.each(function() {
+            this.style[key] = val
+          })
+          break
+      }
+      return this
+    },
+    find: function(selector) {
+      var _els = []
+      this.each(function() {
+        _els = _els.concat([].slice.call(this.querySelectorAll(selector)))
+      })
+      _els.__proto__ = els.__proto__
+      return _els
+    }
+  }
+
+  return els
+});
+
+</script>
+
+</body>
+</html>

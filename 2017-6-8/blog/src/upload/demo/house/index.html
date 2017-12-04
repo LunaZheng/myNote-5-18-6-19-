@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<style>
+html,body {height: 100%; overflow: hidden; background: #030609;}
+input[type=range] {cursor: pointer;}
+.bg-wall {
+  background-color: silver;
+  background-image: 
+  linear-gradient(335deg, #b00 23px, transparent 23px),
+  linear-gradient(155deg, #d00 23px, transparent 23px),
+  linear-gradient(335deg, #b00 23px, transparent 23px),
+  linear-gradient(155deg, #d00 23px, transparent 23px);
+  background-size: 58px 58px; 
+  background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+}
+#house {width: 100%; height: 100%; position: fixed; left: 0; top: 0; text-align: center; white-space: nowrap;
+  transform-style: preserve-3d;
+  perspective: 800px;
+}
+#house:after {content: ""; display: inline-block; vertical-align: middle; height: 100%;}
+#house * {
+  transform-style: preserve-3d;
+}
+#house .ib {width: 500px; height: 300px; display: inline-block; vertical-align: middle; color: #fff; font-size: 50px;
+  transform: translateZ(-250px) rotateX(-30deg) rotateY(30deg);
+}
+#house .ib > *,
+#house .ib .four-wall > *  {width: 100%; height: 100%; position: absolute; left: 0; top: 0;}
+#house .ib .four-wall > *:nth-child(2n):before {
+  display: block;
+  content: "";
+  width: 0; height: 0;
+  position: absolute; left: 0; bottom: 100%;
+  border: 250px solid transparent;
+  border-bottom-color: rgba(200,0,0,1);
+  transform-origin: center bottom;
+  transform: scale(1, .58);
+}
+#house .top {-background: rgba(0,255,0,.3); height: 350px; top: -145px;}
+#house .top > * {width: 100%; height: 100%; position: absolute; left: 0; top: 0; padding: 0 20px;
+  margin-left: -20px;
+  background: #09f;
+  transform-origin: center top;
+  transform: rotateX(60deg);
+}
+#house .top .forward {
+
+}
+#house .top .back {
+  transform: rotateX(-60deg);
+}
+#house .bottom {width: 500px; height: 500px;
+  background: rgba(200,200,200,1);
+  margin-top: -100px;
+  transform: translateY(150px) rotateX(90deg);
+}
+
+</style>
+<div id="house">
+  <div class="ib">
+    <div class="four-wall">
+      <div class="bg-wall" style="transform: rotateY(0deg) translateZ(250px);">1</div>
+      <div class="bg-wall" style="transform: rotateY(90deg) translateZ(250px);">2</div>
+      <div class="bg-wall" style="transform: rotateY(180deg) translateZ(250px);">3</div>
+      <div class="bg-wall" style="transform: rotateY(270deg) translateZ(250px);">4</div>
+    </div>
+    <div class="top">
+      <div class="forward">forward</div>
+      <div class="back">back</div>
+    </div>
+    <div class="bottom"></div>
+  </div>
+</div>
+<style>
+  #power {position: absolute; left: 20px; bottom: 20px; color: green; z-index: 10; text-shadow: 0 0 5px rgba(0,255,0,.5);}
+</style>
+<a id="power" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=273259755&amp;site=qq&amp;menu=yes">Powered By 摘星fy</a>
+<script src="jq.js"></script>
+<script>
+var house = $('#house')
+var ib = house.find('.ib')
+var x = Number(localStorage.x) % 360 || 0
+var y = Number(localStorage.y) % 360 || 0
+ib.css({
+  transform: 'translateZ(-250px) rotateX('+-y+'deg) rotateY('+x+'deg)'
+})
+$(document).on('mousedown', function(e) {
+  e.preventDefault()
+  var x1 = e.clientX
+  var y1 = e.clientY
+  var originX = x
+  var originY = y
+  this.onmousemove = function(e) {
+    var x2 = e.clientX
+    var y2 = e.clientY
+    var disX = x2 - x1
+    var disY = y2 - y1
+    x = originX + disX / 4
+    y = originY + disY / 4
+    localStorage.x = x
+    localStorage.y = y
+    ib.css({
+      transform: 'translateZ(-250px) rotateX('+-y+'deg) rotateY('+x+'deg)'
+    })
+  }
+  this.onmouseup = function(e) {
+    this.onmousemove = this.onmouseup = null
+  }
+})
+
+ib.find('div').each(function() {
+  if (this.children.length == 0) {
+    this.innerHTML = ''
+    this.style.opacity = .5
+    $('<input type="range" value="50" />').appendTo(this).on('mousedown', function(e) {
+      e.stopPropagation()
+    }).on('change', function() {
+      console.log(this.value)
+      $(this).parent().css({
+        opacity: this.value / 100
+      })
+    })
+  }
+})
+</script>
+
+</body>
+</html>

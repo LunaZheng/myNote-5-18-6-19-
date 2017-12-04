@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+<script>
+  // var json = {}
+  angular.service('myService', function() {
+    return { // 当前json就是共享数据
+      name: 'abc',
+      age: 20
+    }
+  })
+</script>
+
+angular
+<div>
+  <div ng-controller="ctrl1" :myService="myService">
+    {{name}}
+  </div>
+  
+  <div ng-controller="ctrl2" :myService="myService">
+    {{name}}
+  </div>
+</div>
+
+vue
+<div>
+  <video-list :g="g">
+    {{name}}
+  </video-list>
+
+  <video-brief :g="g">
+    {{name}}
+    <my-video></my-video>
+  </video-brief>
+</div>
+
+react
+<script>
+  class Comment extends react.component {
+    render() {
+      return (
+        <div>123456</div>
+      )
+    }
+  }
+  class CommentList extends react.component {
+    render() {
+      return (
+        <div>
+          <div className="comment-list">
+            <Comment></Comment>
+          </div>
+          <div>
+            <commentForm></commentForm>
+          </div>
+        </div>
+      )
+    }
+  }
+</script>
+
+</body>
+</html>

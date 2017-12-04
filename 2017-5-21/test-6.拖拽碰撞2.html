@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>拖拽碰撞</title>
+</head>
+<body>
+  
+<style>
+* {padding: 0; margin: 0; list-style: none; color: inherit; font: inherit; box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+.box {width: 100px; height: 100px; position: absolute; left: 100px; top: 100px; background: orange; border-radius: 50%;margin: -50px;}
+</style>
+<div id="app">
+  <div class="box"></div>
+  <div class="box" style="left: 500px"></div>
+</div>
+<script>
+var app = document.getElementById('app')
+ app.onmousedown = function(e) {
+  var e = e || window.event
+  var target = e.target
+  var box = target.closest('.box')
+
+  var x1 = e.clientX
+  var y1 = e.clientY
+  box.originX = box.offsetLeft
+  box.originY = box.offsetTop
+  box.style.margin = 0
+  box.style.left = box.originX + 'px'
+  box.style.top = box.originY + 'px'
+
+  console.log(box.originX, box.originY)
+
+  document.onmousemove = function(e) {
+    var x2 = e.clientX
+    var y2 = e.clientY 
+
+    var vx = 0
+    var vy = 0
+    
+  }
+ }
+</script>
+
+</body>
+</html>

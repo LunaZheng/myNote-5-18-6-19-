@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=640, user-scalable=no">
+  <title>Blog | By 摘星fy</title>
+  <link rel="stylesheet" href="static/css/all.css?dabc">
+  <link rel="stylesheet" href="static/icon/style.css">
+</head>
+<body style="background: #eee;">
+
+<style>
+  #app {width: 640px; height: 100%; position: fixed; left: 50%; top: 0; margin-left: -320px; overflow: hidden;}
+
+  #profile {width: 480px; height: 100%; background: rgba(0,0,0,.4); position: relative;
+    transition: .4s all;
+    overflow: hidden;
+    transform: translateX(-240px);
+  }
+  #profile .inner {width: 480px; height: 100%; position: relative;
+    transition: .4s all;
+  }
+  #profile .inner > div {width: 100%; height: 100%; position: absolute; left: 0; top: 0;}
+  #profile .inner .bg-box {background: url(static/img/bg.jpg) no-repeat center / cover;
+    -webkit-filter: blur(10px);
+    -o-filter: blur(10px);
+    filter: blur(10px);
+  }
+  #profile .inner .forward {color: #fff; overflow: auto;}
+  #profile .inner .forward > div {background: rgba(0,0,0,.3); margin-bottom: 20px; box-shadow: 0 0 5px rgba(0,0,0,.3);}
+  #profile .inner .forward .avatar-box {text-align: center; height: 240px;}
+  #profile .inner .forward .avatar-box img {width: 100px; height: 100px; border-radius: 50%; border: 1px solid #ccc;}
+  #profile .inner .forward .nav {}
+  #profile .inner .forward .nav ul {padding: 10px 0;}
+  #profile .inner .forward .nav ul li {border-bottom: 1px solid rgba(0,0,0,.1);}
+  #profile .inner .forward .nav ul li:last-child {border: none;}
+  #profile .inner .forward .nav ul li a {display: block; padding: .8em 1.5em;}
+
+  #blog {width: 640px; height: 100%; position: absolute; left: 0; top: 0;
+    transition: .4s all;
+  }
+  #blog .view {width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: #fff;}
+  #blog .view .topbar {height: 80px; padding: 0 20px 0 20px; box-shadow: 0 0 10px rgba(0,0,0,.2); text-align: center;}
+  #blog .view .topbar > .fl {padding-top: 24px;}
+  #blog .view .topbar > .title-box {height: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 34px;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+  }
+  #blog .view .topbar > .title-box > div {}
+  #blog .view .topbar > .title-box > div img {vertical-align: middle;}
+  #blog .view .topbar .icon {font-size: 36px; cursor: pointer;}
+  #blog .view .content {width: 100%; position: absolute; left: 0; top: 80px; bottom: 0; overflow: auto; padding-bottom: 100px;}
+  #blog .click-hide-profile {width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: rgba(0,0,0,.2); display: none;}
+
+  #app.on #profile {transform: translateX(0px);}
+  #app.on #blog {transform: translateX(480px);}
+  #app.on #blog .click-hide-profile {display: block;}
+
+  #article-list {}
+  #article-list section {overflow: hidden; padding: 10px 0; border-bottom: 1px solid #ddd;}
+  #article-list section .fl {margin-right: 10px;}
+  #article-list section .fl .img-box {width: 7em; padding-top: 100%; background: no-repeat center / cover; border-radius: 2px;}
+  #article-list section .info {overflow: hidden;}
+  #article-list section .info .top {height: 2em; line-height: 2em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+  #article-list section .info .middle {height: 3em; color: #666; overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  #article-list section .info .bottom {color: #999; height: 2em; line-height: 2em;}
+</style>
+
+<div id="app" :class="{on: g.router.isShowProfile}">
+  <page-profile></page-profile><!-- 导航页 -->
+  <div id="blog">
+    <transition-group name="bounce">
+      <div
+        v-for="(name, idx) in g.router.pages"
+        :key="idx"
+        :is="name"
+        :g="g"
+      ></div>
+    </transition-group>
+    <div class="click-hide-profile"
+      @click="g.router.isShowProfile = false"
+    ></div>
+  </div>
+</div>
+
+<script src="static/js/zepto.js"></script>
+<script src="static/js/vue.js"></script>
+<script src="static/js/Component.Profile.es6.js"></script>
+<script src="static/js/Component.Index.es6.js"></script>
+<script src="static/js/Component.ArticleContent.es6.js"></script>
+<script src="static/js/g.js"></script>
+<script>
+const vm = new Vue({
+  el: '#app',
+  data() {
+    return {
+      g: {
+        router: {
+          pages: ['page-index']
+        },
+        isShowProfile: false,
+        goForward(componentName) {
+          const g = this
+          if (g.router.isLoading) {
+            return
+          }
+          g.router.isLoading = true
+          this.router.pages.push(componentName)
+        },
+        goBack() {
+          history.back()
+        }
+      }
+    }
+  },
+  watch: {
+    'g.router': {
+      deep: true,
+      handler(newVal) {
+        // location.hash = location.host.indexOf('localhost') > -1 ? JSON.stringify(newVal) : encodeURIComponent(JSON.stringify(newVal))
+        location.hash = JSON.stringify(newVal)
+      }
+    }
+  },
+  methods: {
+    routerInit() {
+      const vm = this
+      let hash = location.hash.substring(1)
+      let router = {}
+      try {
+        hash = decodeURI(hash)
+      } catch (e) {
+        console.log('hash decodeURI err')
+      }
+      try {
+        router = JSON.parse(hash)
+      } catch (e) {
+        console.log('hash parse err')
+      }
+      router.pages = router.pages || ['page-index']
+      router.isShowProfile = router.isShowProfile || false
+      router.isLoading = router.isLoading || false
+      vm.g.router = router
+    }
+  },
+  mounted() {
+    const vm = this
+    vm.routerInit()
+    $(window).on('hashchange', () => {
+      vm.routerInit()
+    })
+  }
+})
+
+</script>
+
+</body>
+</html>

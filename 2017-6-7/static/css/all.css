@@ -1,0 +1,57 @@
+* {margin: 0; padding: 0; font: inherit; color: inherit; box-sizing: border-box; line-height: inherit;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+}
+body {font-size: 24px; line-height: 1.5em; color: #333;}
+ul,li {list-style: none;}
+a {text-decoration: none;}
+/*time {color: #999; font-size: 24px;}*/
+
+.fl {float: left;}
+.fr {float: right;}
+.ib {display: inline-block; vertical-align: middle; position: relative;}
+.vm {display: inline-block; height: 100%; vertical-align: middle;}
+.space {padding: 20px;}
+
+.img-box {width: 100px; height: 100px; background: #ddd no-repeat center / cover;}
+
+.rate {}
+.rate .rate-list {}
+.rate .rate-list section {overflow: hidden; padding: 20px 0; border-bottom: 1px solid #ddd;}
+.rate .rate-list section .avatar {margin-right: 10px;}
+.rate .rate-list section .avatar .img-box {border-radius: 2px;}
+.rate .rate-list section .words {overflow: hidden;}
+.rate .rate-list section .words .user-box {}
+.rate .rate-list section .words .user-box time {color: #999; font-size: 22px;}
+.rate .rate-list section .words p {color: #666; line-height: 1.4em;}
+
+
+#page-article {}
+#page-article .content {}
+#page-article .content > .space {}
+#page-article .content > .space .article-title {margin-bottom: 20px;}
+#page-article .content > .space .article-title .read-count {margin-left: 20px;}
+#page-article .content > .space .article-title .author {overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+#page-article .content .article-content {color: #666;}
+#page-article .content .article-content .img {max-width: 100%; display: block; margin: 0 auto; margin-bottom: 20px;}
+#page-article .content .article-content dl {}
+#page-article .content .article-content dl dt {font-weight: bold; margin-bottom: 15px;}
+#page-article .content .article-content dl dd {margin-bottom: 15px;}
+
+
+/*页面进出场动画*/
+.bounce-enter-active {
+  animation: bounce-in .3s;
+}
+.bounce-leave-active {
+  animation: bounce-out .3s;
+}
+@keyframes bounce-in {
+  0% {transform: translateX(640px);/*  opacity: 0; */}
+  100% {transform: translateX(0);/*  opacity: 1; */}
+}
+@keyframes bounce-out {
+  0% {transform: translateX(0);/*  opacity: 1; */}
+  100% {transform: translateX(640px);/*  opacity: 0; */}
+}
+
