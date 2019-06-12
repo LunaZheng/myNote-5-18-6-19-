@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/all.css">
+  <style>
+    * {padding: 0; margin: 0; list-style: none; color: inherit; font: inherit; box-sizing: border-box;
+      -webkit-overflow-scrolling: touch;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {font-size: 14px;}
+    a {text-decoration: none;}
+
+    .ib {display: inline-block; vertical-align: middle;}
+    .vm {display: inline-block; height: 100%; vertical-align: middle;}
+
+    .fr {float: right;}
+    .wrap {max-width: 980px; padding: 0 20px; position: relative; margin: 0 auto;}
+  </style>
+</head>
+<body>
+
+<style>
+  #focus {height: 500px; position: relative; background: #def; color: #fff;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+  #focus .back {width: 100%; height: 100%; position: absolute; left: 0; top: 0; z-index: 1;}
+  #focus .back .img-list {height: 100%;}
+  #focus .back .img-list li {width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: no-repeat center / cover;}
+  #focus .back .img-list li:nth-child(1) {}
+  #focus .back .img-list li.on {}
+  #focus .forward {height: 100%; position: relative; z-index: 1;}
+  #focus .forward .wrap {height: 100%; max-width: 1200px;}
+  #focus .forward .wrap .logo-img {position: relative;}
+  #focus .forward .wrap nav {padding-top: 36px; position: relative; font-size: 12px;}
+  #focus .forward .wrap nav ul {}
+  #focus .forward .wrap nav ul li {display: inline-block; margin-left: 50px;}
+  #focus .forward .wrap nav ul li.on {border-bottom: 3px solid #fff; padding-bottom: 10px;}
+  #focus .forward .wrap nav ul li a {}
+  #focus .forward .wrap .select-menu {width: 100%; position: relative; color: #333; height: 32px; line-height: 32px; outline: none;}
+  #focus .forward .wrap .text-box {width: 100%; height: 100%; position: absolute; left: 0; top: 0; white-space: nowrap; text-align: center;}
+  #focus .forward .wrap .text-box section {width: 100%; height: 100%; position: absolute; left: 0; top: 0; opacity: 0;}
+  
+  #focus .forward .wrap .text-box section .ib {margin: 0 140px; white-space: normal;
+    transition: .4s .2s all;
+    transform: translateY(-100px);
+  }
+  #focus .forward .wrap .text-box section.on .ib {
+    transform: translateY(0px);
+  }
+  #focus .forward .wrap .text-box section .ib h1 {font-size: 50px; margin-bottom: 28px;}
+  #focus .forward .wrap .direction {}
+  #focus .forward .wrap .direction .btn-dir {width: 31px; height: 55px; background: url(img/btn-prev.png) no-repeat center; position: absolute; left: 20px; top: 50%; margin-top: -27.5px;}
+  #focus .forward .wrap .direction .btn-dir.prev {}
+  #focus .forward .wrap .direction .btn-dir.next {left: auto; right: 20px; background-image: url(img/btn-next.png);}
+  #focus .forward .wrap .direction .btn-dir.prev:hover {background-image: url(img/btn-prev-on.png);}
+  #focus .forward .wrap .direction .btn-dir.next:hover {background-image: url(img/btn-next-on.png);}
+  #focus .forward .wrap .thumb-box {width: 100%; position: absolute; left: 0; bottom: 40px;}
+  #focus .forward .wrap .thumb-box ul {text-align: center;}
+  #focus .forward .wrap .thumb-box ul li {width: 60px; height: 60px; display: inline-block; background: orange; vertical-align: top; position: relative;}
+  #focus .forward .wrap .thumb-box ul li a {display: block; height: 100%; line-height: 60px; font-size: 30px; font-weight: bold; font-style: italic; background: rgb(10,10,10); opacity: 0; transition: .3s all; text-indent: -5px;}
+  #focus .forward .wrap .thumb-box ul li.on a,
+  #focus .forward .wrap .thumb-box ul li a:hover {opacity: 1;}
+
+  @media (max-width: 1000px) {
+    #focus .forward .wrap nav ul li {margin-left: 30px;}
+  }
+  @media (max-width: 790px) { /* mobile */
+    #focus .forward .wrap .logo-img {display: block; margin: 0 auto 20px auto;}
+    #focus .forward .wrap nav {display: none;}
+    #focus .forward .wrap .text-box section .ib {margin: 0 60px;}
+    #focus .forward .wrap .text-box section .ib h1 {font-size: 30px;}
+    #focus .forward .wrap .text-box .ib p {display: none;}
+  }
+  @media (min-width: 790px) { /* pc */
+    #focus .forward .wrap .select-menu {display: none;}
+  }
+
+</style>
+<div id="focus">
+  <div class="back">
+    <ul class="img-list">
+      <li style="background-image: url(img/slide-1.jpg);" class="on"></li>
+      <li style="background-image: url(img/slide-2.jpg);"></li>
+      <li style="background-image: url(img/slide-3.jpg);"></li>
+    </ul>
+  </div>
+  <div class="forward">
+    <div class="wrap">
+      <div class="text-box">
+        <section class="on" style="opacity: 1;">
+          <div class="ib">
+            <h1>CREATE OASIS IN THE DESERT!111</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, unde odit dolor! Consequatur reiciendis rem quod quasi nihil, earum et sunt in, repudiandae dolorem, quo amet quia, temporibus minus? Nesciunt.</p>
+          </div><div class="vm"></div>
+        </section>
+        <section>
+          <div class="ib">
+            <h1>CREATE OASIS IN THE DESERT!222</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, unde odit dolor! Consequatur reiciendis rem quod quasi nihil, earum et sunt in, repudiandae dolorem, quo amet quia, temporibus minus? Nesciunt.</p>
+          </div><div class="vm"></div>
+        </section>
+        <section>
+          <div class="ib">
+            <h1>CREATE OASIS IN THE DESERT!333</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, unde odit dolor! Consequatur reiciendis rem quod quasi nihil, earum et sunt in, repudiandae dolorem, quo amet quia, temporibus minus? Nesciunt.</p>
+          </div><div class="vm"></div>
+        </section>
+      </div>
+      <img src="img/logo-sm.png" alt="" class="logo-img">
+      <nav class="fr">
+        <ul>
+          <li class="on">
+            <a href="javascript:">Home</a>
+          </li>
+          <li>
+            <a href="javascript:">About</a>
+          </li>
+          <li>
+            <a href="javascript:">Projects</a>
+          </li>
+          <li>
+            <a href="javascript:">News</a>
+          </li>
+          <li>
+            <a href="javascript:">Testimonials</a>
+          </li>
+          <li>
+            <a href="javascript:">Contacts</a>
+          </li>
+        </ul>
+      </nav>
+      <select class="select-menu">
+        <option value="#">Navigate to...</option>
+        <option value="https://livedemo00.template-help.com/joomla_50703/" selected="selected">Home</option>
+        <option value="https://livedemo00.template-help.com/joomla_50703/index.php/about">About</option>
+        <option value="https://livedemo00.template-help.com/joomla_50703/index.php/about/history">–History</option>
+        <option value="https://livedemo00.template-help.com/joomla_50703/index.php/about/team">–Team</option>
+        <option value="https://livedemo00.template-help.com/joomla_50703/index.php/about/team/faqs">––FAQs</option>
+        <option value="https://livedemo00.template-help.com/joomla_50703/index.php/template-settings">–Template settings</option>
+        <option value="https://livedemo00.template-help.com/joomla_50703/index.php/forum">–Forum</option>
+        <option value="https://livedemo00.template-help.com/joomla_50703/index.php/gallery">Projects</option>
+        <option value="https://livedemo00.template-help.com/joomla_50703/index.php/blog">News</option>
+        <option value="https://livedemo00.template-help.com/joomla_50703/index.php/testimonials">Testimonials</option>
+        <option value="https://livedemo00.template-help.com/joomla_50703/index.php/contacts">Contacts</option>
+      </select>
+      <div class="direction">
+        <div class="btn-dir prev"></div>
+        <div class="btn-dir next"></div>
+      </div>
+      <div class="thumb-box">
+        <ul>
+          <li style="background-image: url(img/thumb-1.jpg);" class="on">
+            <a href="javascript:">1</a>
+          </li>
+          <li style="background-image: url(img/thumb-2.jpg);">
+            <a href="javascript:">2</a>
+          </li>
+          <li style="background-image: url(img/thumb-3.jpg);">
+            <a href="javascript:">3</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/jq.js"></script>
+<script>
+$('#focus').each(function() {
+  var curIndex = 0
+  var me = $(this)
+  var imgs = me.find('.img-list li')
+  var secs = me.find('section')
+
+  var lis = me.find('.thumb-box li').on('click', function(e) {
+    curIndex = $(this).index()
+    setState()
+  })
+
+  me.find('.prev').on('click', function() {
+    curIndex--
+    setState()
+  })
+
+  me.find('.next').on('click', function() {
+    curIndex++
+    setState()
+  })
+
+  function setState() {
+    if (curIndex < 0) {
+      curIndex = lis.length - 1
+    }
+    if (curIndex > lis.length - 1) {
+      curIndex = 0
+    }
+    // lis.eq(curIndex).addClass('on').siblings().removeClass('on')
+    lis.removeClass('on').eq(curIndex).addClass('on')
+    imgs.stop().fadeOut().eq(curIndex).stop().fadeIn()
+    secs.stop().animate({
+      opacity: 0
+    }).eq(curIndex).stop().animate({
+      opacity: 1
+    })
+    secs.removeClass('on').eq(curIndex).addClass('on')
+  }
+})
+</script>
+
+</body>
+</html>

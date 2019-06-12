@@ -7,23 +7,24 @@
 <body>
   
 <canvas width="1000" height="400" id="canvas"></canvas>
+<!-- rtmp://rtmp.open.ys7.com/openlive/6e953cb91230483eaf4f90e65dd92de5.hd -->
 <video id="video" src="static/video/oceans.mp4" controls="" autoplay=""></video>
 <script>
 var video = document.getElementById('video')
 var canvas = document.getElementById('canvas')
 var gd = canvas.getContext('2d')
 
-function rand(m, n) {
-  return Math.floor(Math.random() * (n - m + 1) + m)
-}
-
-var data = new Array(100).fill().map(function() {
+// 弹幕
+/*var data = new Array(100).fill().map(function() {
   return {
     text: '今天是个好日子' + Math.random(),
     x: rand(0, 1000),
     y: rand(30, 300),
   }
 })
+function rand(m, n) {
+  return Math.floor(Math.random() * (n - m + 1) + m)
+}*/
 
 setInterval(function() {
   gd.clearRect(0, 0, canvas.width, canvas.height)
@@ -33,12 +34,12 @@ setInterval(function() {
     0, 0, video.offsetWidth, video.offsetHeight, // 资源尺寸
     0, 0, canvas.width, canvas.height  // 显示尺寸
   )
-  data.forEach(function(item, idx) {
+  /*data.forEach(function(item, idx) {
     item.x -= 1
     gd.beginPath()
     gd.fillStyle = 'red'
     gd.fillText(item.text, item.x, item.y)
-  })
+  })*/
 }, 1000 / 60)
 
 </script>
